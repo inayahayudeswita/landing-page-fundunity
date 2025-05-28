@@ -6,6 +6,7 @@ export default function Header() {
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [scrolled, setScrolled] = useState(false);
   const [showDonateForm, setShowDonateForm] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [formData, setFormData] = useState({
     nama: "",
     email: "",
@@ -23,6 +24,7 @@ export default function Header() {
   const toggleDropdown = (menu) =>
     setActiveDropdown(activeDropdown === menu ? null : menu);
 
+  const toggleMobileMenu = () => setMobileMenuOpen(!mobileMenuOpen);
   const openDonateForm = () => setShowDonateForm(true);
   const closeDonateForm = () => setShowDonateForm(false);
 
@@ -77,22 +79,22 @@ export default function Header() {
         className={`fixed w-full top-0 z-50 transition-all duration-300 ${
           scrolled
             ? "bg-black bg-opacity-90 py-2 shadow-lg"
-            : "bg-black bg-opacity-70 py-4"
+            : "bg-black bg-opacity-70 py-3 md:py-4"
         }`}
       >
-        <div className="container mx-auto px-6 flex justify-between items-center">
+        <div className="container mx-auto px-4 sm:px-6 flex justify-between items-center">
           {/* Logo */}
-          <Link to="/">
-            <img src={logoCMS} alt="YMP Logo" className="h-14 w-auto" />
+          <Link to="/" className="flex-shrink-0">
+            <img src={logoCMS} alt="YMP Logo" className="h-10 sm:h-12 md:h-14 w-auto" />
           </Link>
 
-          {/* Navigation */}
-          <nav className="hidden md:flex space-x-6 text-white font-medium">
+          {/* Desktop Navigation */}
+          <nav className="hidden lg:flex space-x-4 xl:space-x-6 text-white font-medium">
             {["who", "what", "moving"].map((menu) => (
               <div key={menu} className="relative group">
                 <button
                   onClick={() => toggleDropdown(menu)}
-                  className="flex items-center gap-1 hover:text-blue-400 transition-colors"
+                  className="flex items-center gap-1 hover:text-blue-400 transition-colors text-sm xl:text-base px-2 py-1"
                   aria-expanded={activeDropdown === menu}
                 >
                   {menu === "who" && "Who We Are"}
@@ -116,30 +118,18 @@ export default function Header() {
 
                 {activeDropdown === menu && (
                   <div
-                    className="absolute top-full left-0 mt-2 w-48 rounded-lg shadow-lg bg-blue-900"
+                    className="absolute top-full left-0 mt-2 w-48 rounded-lg shadow-lg bg-blue-900 z-50"
                     role="menu"
                   >
                     {menu === "who" && (
                       <>
-                        <Link
-                          to="/about"
-                          className="block px-4 py-2 hover:bg-blue-700"
-                          role="menuitem"
-                        >
+                        <Link to="/about" className="block px-4 py-2 text-sm hover:bg-blue-700" role="menuitem">
                           About YMP
                         </Link>
-                        <Link
-                          to="/contact"
-                          className="block px-4 py-2 hover:bg-blue-700"
-                          role="menuitem"
-                        >
+                        <Link to="/contact" className="block px-4 py-2 text-sm hover:bg-blue-700" role="menuitem">
                           Contact
                         </Link>
-                        <Link
-                          to="/"
-                          className="block px-4 py-2 hover:bg-blue-700"
-                          role="menuitem"
-                        >
+                        <Link to="/" className="block px-4 py-2 text-sm hover:bg-blue-700" role="menuitem">
                           Home
                         </Link>
                       </>
@@ -147,38 +137,22 @@ export default function Header() {
 
                     {menu === "what" && (
                       <>
-                        <Link
-                          to="/program"
-                          className="block px-4 py-2 hover:bg-blue-700"
-                          role="menuitem"
-                        >
+                        <Link to="/program" className="block px-4 py-2 text-sm hover:bg-blue-700" role="menuitem">
                           Program
                         </Link>
-                        <Link
-                          to="/campaign"
-                          className="block px-4 py-2 hover:bg-blue-700"
-                          role="menuitem"
-                        >
-                          Campaign
+                        <Link to="/focusareas" className="block px-4 py-2 text-sm hover:bg-blue-700" role="menuitem">
+                          FocusAreas
                         </Link>
                       </>
                     )}
 
                     {menu === "moving" && (
                       <>
-                        <Link
-                          to="/volunteers"
-                          className="block px-4 py-2 hover:bg-blue-700"
-                          role="menuitem"
-                        >
-                          Volunteers
+                        <Link to="/getinvolved" className="block px-4 py-2 text-sm hover:bg-blue-700" role="menuitem">
+                          Get Involved
                         </Link>
-                        <Link
-                          to="/donationinnature"
-                          className="block px-4 py-2 hover:bg-blue-700"
-                          role="menuitem"
-                        >
-                          Donation in Nature
+                        <Link to="/faqs" className="block px-4 py-2 text-sm hover:bg-blue-700" role="menuitem">
+                          FAQs
                         </Link>
                       </>
                     )}
@@ -187,39 +161,108 @@ export default function Header() {
               </div>
             ))}
 
-            {/* Donate Button */}
+            {/* Desktop Donate Button */}
             <button
               onClick={openDonateForm}
-              className="ml-4 px-5 py-2 rounded-full bg-gradient-to-r from-blue-600 to-blue-400 text-white font-semibold shadow-lg hover:brightness-110 transition"
+              className="ml-2 xl:ml-4 px-3 xl:px-5 py-2 rounded-full bg-gradient-to-r from-blue-600 to-blue-400 text-white font-semibold shadow-lg hover:brightness-110 transition text-sm xl:text-base"
             >
               Donate Now
             </button>
           </nav>
 
-          {/* Mobile Hamburger */}
-          <button className="md:hidden text-white" aria-label="Open menu">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-7 w-7"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+          {/* Mobile/Tablet Menu Button and Donate */}
+          <div className="flex items-center space-x-2 lg:hidden">
+            <button
+              onClick={openDonateForm}
+              className="px-3 py-2 text-xs sm:text-sm rounded-full bg-gradient-to-r from-blue-600 to-blue-400 text-white font-semibold shadow-lg hover:brightness-110 transition"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            </svg>
-          </button>
+              Donate
+            </button>
+            <button 
+              className="text-white p-1" 
+              aria-label="Open menu"
+              onClick={toggleMobileMenu}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6 sm:h-7 sm:w-7"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+            </button>
+          </div>
         </div>
+
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className="lg:hidden bg-black bg-opacity-95 border-t border-gray-700">
+            <div className="container mx-auto px-4 py-4">
+              <nav className="space-y-4">
+                {["who", "what", "moving"].map((menu) => (
+                  <div key={menu}>
+                    <button
+                      onClick={() => toggleDropdown(menu)}
+                      className="flex items-center justify-between w-full text-white hover:text-blue-400 transition-colors py-2"
+                    >
+                      <span>
+                        {menu === "who" && "Who We Are"}
+                        {menu === "what" && "What We Do"}
+                        {menu === "moving" && "Moving Together"}
+                      </span>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className={`h-4 w-4 transition-transform ${activeDropdown === menu ? 'rotate-180' : ''}`}
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </button>
+
+                    {activeDropdown === menu && (
+                      <div className="ml-4 mt-2 space-y-2">
+                        {menu === "who" && (
+                          <>
+                            <Link to="/about" className="block text-blue-200 hover:text-white py-1">About YMP</Link>
+                            <Link to="/contact" className="block text-blue-200 hover:text-white py-1">Contact</Link>
+                            <Link to="/" className="block text-blue-200 hover:text-white py-1">Home</Link>
+                          </>
+                        )}
+                        {menu === "what" && (
+                          <>
+                            <Link to="/program" className="block text-blue-200 hover:text-white py-1">Program</Link>
+                            <Link to="/campaign" className="block text-blue-200 hover:text-white py-1">Campaign</Link>
+                          </>
+                        )}
+                        {menu === "moving" && (
+                          <>
+                            <Link to="/volunteers" className="block text-blue-200 hover:text-white py-1">Volunteers</Link>
+                            <Link to="/donationinnature" className="block text-blue-200 hover:text-white py-1">Donation in Nature</Link>
+                          </>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </nav>
+            </div>
+          </div>
+        )}
       </header>
 
       {/* Modal Donate Form */}
       {showDonateForm && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 w-full max-w-md mx-4 relative">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg p-4 sm:p-6 w-full max-w-sm sm:max-w-md mx-4 relative max-h-[90vh] overflow-y-auto">
             <button
               onClick={closeDonateForm}
               className="absolute top-2 right-2 text-gray-600 hover:text-gray-900 font-bold text-xl"
@@ -227,7 +270,7 @@ export default function Header() {
             >
               &times;
             </button>
-            <h2 className="text-xl font-semibold mb-4">Donate Now</h2>
+            <h2 className="text-lg sm:text-xl font-semibold mb-4">Donate Now</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label className="block text-sm font-medium mb-1" htmlFor="nama">
@@ -240,7 +283,7 @@ export default function Header() {
                   value={formData.nama}
                   onChange={handleChange}
                   required
-                  className="w-full border border-gray-300 rounded px-3 py-2"
+                  className="w-full border border-gray-300 rounded px-3 py-2 text-sm"
                 />
               </div>
               <div>
@@ -254,7 +297,7 @@ export default function Header() {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="w-full border border-gray-300 rounded px-3 py-2"
+                  className="w-full border border-gray-300 rounded px-3 py-2 text-sm"
                 />
               </div>
               <div>
@@ -266,7 +309,7 @@ export default function Header() {
                   name="notes"
                   value={formData.notes}
                   onChange={handleChange}
-                  className="w-full border border-gray-300 rounded px-3 py-2"
+                  className="w-full border border-gray-300 rounded px-3 py-2 text-sm"
                   rows={3}
                 />
               </div>
@@ -282,13 +325,13 @@ export default function Header() {
                   value={formData.amount}
                   onChange={handleChange}
                   required
-                  className="w-full border border-gray-300 rounded px-3 py-2"
+                  className="w-full border border-gray-300 rounded px-3 py-2 text-sm"
                 />
               </div>
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-blue-600 text-white font-semibold py-2 rounded hover:bg-blue-700 transition"
+                className="w-full bg-blue-600 text-white font-semibold py-2 rounded hover:bg-blue-700 transition text-sm"
               >
                 {loading ? "Processing..." : "Pay Now"}
               </button>

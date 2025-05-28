@@ -5,18 +5,20 @@ import Header from './components/Header';
 import Hero from './components/Hero';
 import Gallery from './components/Gallery';
 import ImageSlider from './components/ImageSlider';
-import Programs from './components/Programs';
+import Programs from './components/Programs'; // Daftar program
 import Footer from './components/Footer';
 import Partners from './components/Partners';
 
-// Import pages for routing
-import Program from './pages/WhatWeDo/Program';
-import Campaign from './pages/WhatWeDo/Campaign';
-import Volunteers from './pages/MovingTogether/Volunteers';
+import ProgramDetail from './pages/WhatWeDo/ProgramDetail'; // Detail program
+
+// Import komponen FocusAreas, Faqs, dan GetInvolved yang sudah kamu setuju dan aku buatkan:
+import FocusAreas from './pages/WhatWeDo/FocusAreas';
+import Faqs from './pages/MovingTogether/Faqs';
+import GetInvolved from './pages/MovingTogether/GetInvolved';
+
 import Contact from './pages/WhoWeAre/Contact';
 import About from './pages/WhoWeAre/About';
 import ErrorBoundary from './components/ErrorBoundary';
-import DonationInNature from './pages/MovingTogether/DonationInNature';
 
 function App() {
   return (
@@ -26,22 +28,33 @@ function App() {
           <Header />
           <main className="p-8">
             <Routes>
-              <Route path="/" element={
-                <>
-                  <Hero />
-                  <Gallery />
-                  <ImageSlider />
-                  <Programs />
-                  <Partners />
-                </>
-              } />
+              {/* Homepage */}
+              <Route
+                path="/"
+                element={
+                  <>
+                    <Hero />
+                    <Gallery />
+                    <ImageSlider />
+                    <Programs />
+                    <Partners />
+                  </>
+                }
+              />
+
+              {/* Static pages */}
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
-              <Route path="/program" element={<Program />} />
-              <Route path="/campaign" element={<Campaign />} />
-              <Route path="/volunteers" element={<Volunteers />} />
-              <Route path="/donationinnature" element={<DonationInNature />} />
-              <Route path="*" element={<div>Page Not Found</div>} />
+              <Route path="/focusareas" element={<FocusAreas />} />  {/* huruf kecil di URL lebih umum */}
+              <Route path="/faqs" element={<Faqs />} />
+              <Route path="/getinvolved" element={<GetInvolved />} />
+
+              {/* Program routes */}
+              <Route path="/program" element={<Programs />} />               {/* List of programs */}
+              <Route path="/program/:id" element={<ProgramDetail />} />     {/* Detail program */}
+
+              {/* 404 Fallback */}
+              <Route path="*" element={<div className="text-center text-red-600 text-xl mt-10">Page Not Found</div>} />
             </Routes>
           </main>
           <Footer />

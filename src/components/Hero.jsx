@@ -12,37 +12,39 @@ export default function Hero() {
   return (
     <>
       <section
-        className="relative h-screen flex items-center"
+        className="relative min-h-screen flex items-center px-4 sm:px-6 lg:px-8"
         style={{
           backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.8), rgba(0,0,0,0.3)), url(${heroImage})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
       >
-        <div className="container mx-auto px-6 z-10 max-w-3xl">
-          <h1
-            className="text-5xl font-extrabold leading-tight text-white drop-shadow-lg"
-            style={{ fontFamily: "'Poppins', sans-serif" }}
-          >
-            Together, Creating Change with YukMariProject
-          </h1>
-          <p className="mt-6 text-lg text-blue-100 max-w-lg drop-shadow">
-            Join us in making a meaningful impact for those in need and building
-            a better future.
-          </p>
-          <div className="mt-8 flex gap-4">
-            <button
-              onClick={() => navigate("/gallery")}
-              className="px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-400 text-white font-semibold rounded-lg shadow-lg hover:brightness-110 transition transform hover:scale-105"
+        <div className="container mx-auto z-10 max-w-7xl">
+          <div className="max-w-4xl">
+            <h1
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight text-white drop-shadow-lg mb-4 sm:mb-6"
+              style={{ fontFamily: "'Poppins', sans-serif" }}
             >
-              Let's Get Moving
-            </button>
-            <button
-              onClick={toggleDonateForm}
-              className="px-8 py-4 border border-white text-white rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition transform hover:scale-105"
-            >
-              Donate Now
-            </button>
+              Together, Creating Change with YukMariProject
+            </h1>
+            <p className="text-base sm:text-lg md:text-xl text-blue-100 max-w-2xl drop-shadow mb-6 sm:mb-8 leading-relaxed">
+              Join us in making a meaningful impact for those in need and building
+              a better future.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
+              <button
+                onClick={() => navigate("/gallery")}
+                className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-blue-600 to-blue-400 text-white font-semibold rounded-lg shadow-lg hover:brightness-110 transition transform hover:scale-105 text-sm sm:text-base"
+              >
+                Let's Get Moving
+              </button>
+              <button
+                onClick={toggleDonateForm}
+                className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 border border-white text-white rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition transform hover:scale-105 text-sm sm:text-base"
+              >
+                Donate Now
+              </button>
+            </div>
           </div>
         </div>
       </section>
@@ -54,10 +56,10 @@ export default function Hero() {
           onClick={toggleDonateForm}
         >
           <div
-            className="bg-white rounded-xl max-w-md w-full p-8 relative"
+            className="bg-white rounded-xl max-w-md w-full p-6 sm:p-8 relative max-h-[90vh] overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
           >
-            <h2 className="text-2xl font-bold mb-4 text-center text-blue-700">
+            <h2 className="text-xl sm:text-2xl font-bold mb-4 text-center text-blue-700">
               Donate Now
             </h2>
             <form
@@ -72,7 +74,7 @@ export default function Hero() {
                 name="name"
                 type="text"
                 placeholder="Full Name"
-                className="w-full mb-4 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="w-full mb-4 px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm sm:text-base"
               />
               <input
                 required
@@ -81,7 +83,7 @@ export default function Hero() {
                 placeholder="Email Address"
                 pattern="[a-zA-Z0-9._%+-]+@gmail\.com"
                 title="Please enter a valid Gmail address"
-                className="w-full mb-4 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="w-full mb-4 px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm sm:text-base"
               />
               <input
                 required
@@ -89,24 +91,24 @@ export default function Hero() {
                 type="number"
                 placeholder="Donation Amount (IDR)"
                 min={1000}
-                className="w-full mb-4 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="w-full mb-4 px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm sm:text-base"
               />
               <textarea
                 name="message"
                 rows={4}
                 placeholder="Add a message or description (optional)"
-                className="w-full mb-6 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="w-full mb-6 px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm sm:text-base resize-none"
               />
               <button
                 type="submit"
-                className="w-full py-3 bg-gradient-to-r from-blue-600 to-blue-400 text-white rounded-lg font-bold hover:brightness-110 transition"
+                className="w-full py-2 sm:py-3 bg-gradient-to-r from-blue-600 to-blue-400 text-white rounded-lg font-bold hover:brightness-110 transition text-sm sm:text-base"
               >
                 Complete Donation
               </button>
             </form>
             <button
               onClick={toggleDonateForm}
-              className="absolute top-4 right-4 text-gray-600 hover:text-gray-900 font-bold text-2xl"
+              className="absolute top-3 sm:top-4 right-3 sm:right-4 text-gray-600 hover:text-gray-900 font-bold text-xl sm:text-2xl"
               aria-label="Close modal"
             >
               &times;

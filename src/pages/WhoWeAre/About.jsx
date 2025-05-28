@@ -1,60 +1,58 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import video1 from "../../assets/images/video1.mp4";
-import video2 from "../../assets/images/video1.mp4";
-import video3 from "../../assets/images/video1.mp4";
+import React, { useEffect, useState } from 'react';
 
-function About() {
-  const galleries = [
-    {
-      video: video1,
-      story: "This moment captures our efforts in empowering local communities through education and skill development. Witness the transformative journey of individuals achieving new milestones."
-    },
-    {
-      video: video2,
-      story: "A glimpse into our environmental initiatives. This video showcases how sustainability projects are making a real impact in preserving nature for future generations."
-    },
-    {
-      video: video3,
-      story: "An unforgettable event where collaboration and innovation meet. Experience the inspiring stories of change-makers striving for a better world."
-    }
-  ];
+const API_BASE_URL = 'https://backend-donatebank.vercel.app/v1/content/aboutus';
+
+const About = () => {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const fetchAboutUs = async () => {
+      try {
+        const res = await fetch(API_BASE_URL);
+        const result = await res.json();
+        setData(result);
+      } catch (error) {
+        console.error('Gagal memuat data About Us:', error);
+      }
+    };
+
+    fetchAboutUs();
+  }, []);
 
   return (
-    <section className="py-24 bg-gray-100">
-      <div className="container mx-auto px-6 text-center">
-        <h2 className="text-4xl font-bold text-[#004f9f] mb-4">About Us</h2>
-        <p className="text-gray-700 max-w-3xl mx-auto mb-6">
-          Our mission is to create lasting impacts through education, sustainability, and innovation. We strive to empower communities by providing resources and opportunities that drive positive change.
-        </p>
-        <p className="text-gray-700 max-w-3xl mx-auto mb-12">
-          Our vision is a world where individuals and communities thrive together, embracing knowledge and sustainable practices to build a better future for all.
-        </p>
-        
-        <h2 className="text-4xl font-bold text-[#004f9f] mb-4">Gallery</h2>
-        <p className="text-gray-700 max-w-2xl mx-auto mb-6">
-          Discover our collection of inspiring moments, impactful stories, and transformative experiences captured through visuals.
-        </p>
+    <section className="bg-emerald-50 py-16 px-6 lg:px-20">
+      <div className="max-w-6xl mx-auto">
+        <h2 className="text-4xl font-bold text-emerald-800 text-center mb-12">
+          Tentang Kami
+        </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mt-12">
-          {galleries.map((item, index) => (
-            <div key={index} className="transform hover:scale-105 transition-all duration-300">
-              <video 
-                controls 
-                className="w-full rounded-xl shadow-xl border-4 border-white"
-                poster={`/api/placeholder/600/400?video${index+1}`}
-              >
-                <source src={item.video} type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
-              <p className="mt-4 text-gray-800 text-sm italic">{item.story}</p>
+        <div className="grid md:grid-cols-2 gap-12">
+          {data.length === 0 && (
+            <p className="col-span-2 text-center text-gray-500">
+              Tidak ada informasi saat ini.
+            </p>
+          )}
+
+          {data.map((item) => (
+            <div
+              key={item.id}
+              className="bg-white rounded-2xl shadow-md p-6 hover:shadow-xl transition"
+            >
+              {item.imageUrl && (
+                <img
+                  src={item.imageUrl}
+                  alt={item.nama}
+                  className="w-full h-64 object-cover rounded-xl mb-6"
+                />
+              )}
+              <h3 className="text-2xl font-semibold text-emerald-700 mb-2">{item.nama}</h3>
+              <p className="text-gray-700 leading-relaxed">{item.description}</p>
             </div>
           ))}
         </div>
-       
       </div>
     </section>
   );
-}
+};
 
 export default About;

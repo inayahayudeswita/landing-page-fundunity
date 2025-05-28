@@ -1,152 +1,126 @@
-// File: src/pages/WhoWeAre/Contact.jsx
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import { FaUser, FaEnvelope, FaPaperPlane } from "react-icons/fa";
+import emailjs from "@emailjs/browser";
 
-function Contact() {
+export default function Contact() {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: ''
+    name: "",
+    email: "",
+    message: "",
   });
+  const [sending, setSending] = useState(false);
+  const [feedback, setFeedback] = useState(null);
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Logic untuk mengirim pesan kontak
-    console.log('Form submitted:', formData);
-    alert('Pesan Anda telah dikirim!');
-    // Reset form
-    setFormData({
-      name: '',
-      email: '',
-      subject: '',
-      message: ''
-    });
+
+    if (!formData.name || !formData.email || !formData.message) {
+      setFeedback({ type: "error", message: "Please fill all fields." });
+      return;
+    }
+
+    setSending(true);
+    setFeedback(null);
+
+    const templateParams = {
+      name: formData.name,
+      email: formData.email,
+      message: formData.message,
+      time: new Date().toLocaleString(),
+    };
+
+    emailjs
+      .send(
+        "service_g0lt91j",        // <-- ganti dengan service ID kamu
+        "template_5lhs09c",        // <-- ganti dengan template ID kamu
+        templateParams,
+        "WYRA8lM5-2FWMeCTl"      // <-- ganti dengan user/public key kamu
+      )
+      .then(() => {
+        setSending(false);
+        setFeedback({ type: "success", message: "Message sent successfully!" });
+        setFormData({ name: "", email: "", message: "" });
+      })
+      .catch(() => {
+        setSending(false);
+        setFeedback({ type: "error", message: "Failed to send message. Try again." });
+      });
   };
 
   return (
-    <div className="container mx-auto px-8 py-16 mt-20">
-      <h1 className="text-3xl font-bold mb-6">Contact Us</h1>
-      
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-        <div>
-          <p className="mb-6">
-            Kami senang mendengar dari Anda! Apakah Anda memiliki pertanyaan tentang program kami, 
-            ingin menjadi volunteer, atau membutuhkan informasi lebih lanjut? Jangan ragu untuk menghubungi kami.
+    <div className="max-w-lg mx-auto bg-white p-8 rounded-lg shadow-lg">
+      <h2 className="text-3xl font-semibold mb-6 text-blue-700 text-center">Contact Us</h2>
+
+      <form onSubmit={handleSubmit} className="space-y-5">
+        {/* Name */}
+        <div className="flex items-center border border-gray-300 rounded-md overflow-hidden focus-within:ring-2 focus-within:ring-blue-500">
+          <div className="px-3 text-blue-600">
+            <FaUser />
+          </div>
+          <input
+            type="text"
+            name="name"
+            placeholder="Your Name"
+            value={formData.name}
+            onChange={handleChange}
+            className="w-full p-3 outline-none"
+            required
+          />
+        </div>
+
+        {/* Email */}
+        <div className="flex items-center border border-gray-300 rounded-md overflow-hidden focus-within:ring-2 focus-within:ring-blue-500">
+          <div className="px-3 text-blue-600">
+            <FaEnvelope />
+          </div>
+          <input
+            type="email"
+            name="email"
+            placeholder="Your Email"
+            value={formData.email}
+            onChange={handleChange}
+            className="w-full p-3 outline-none"
+            required
+          />
+        </div>
+
+        {/* Message */}
+        <textarea
+          name="message"
+          rows="5"
+          placeholder="Write your message..."
+          value={formData.message}
+          onChange={handleChange}
+          className="w-full border border-gray-300 rounded-md p-3 resize-none focus:ring-2 focus:ring-blue-500 outline-none"
+          required
+        />
+
+        {/* Submit */}
+        <button
+          type="submit"
+          disabled={sending}
+          className="w-full flex justify-center items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-400 hover:brightness-110 text-white font-semibold py-3 rounded-md transition"
+        >
+          {sending ? "Sending..." : <>
+            <FaPaperPlane /> Send Message
+          </>}
+        </button>
+
+        {/* Feedback */}
+        {feedback && (
+          <p
+            className={`text-center mt-3 ${
+              feedback.type === "success" ? "text-green-600" : "text-red-600"
+            }`}
+          >
+            {feedback.message}
           </p>
-          
-          <div className="space-y-4 mb-8">
-            <div className="flex items-start">
-              <div className="text-blue-600 mr-3">
-                <i className="fas fa-map-marker-alt text-xl"></i>
-              </div>
-              <div>
-                <h3 className="font-semibold">Alamat:</h3>
-                <p>Jl. Pemuda No. 123, Jakarta Pusat 10110, Indonesia</p>
-              </div>
-            </div>
-            
-            <div className="flex items-start">
-              <div className="text-blue-600 mr-3">
-                <i className="fas fa-phone text-xl"></i>
-              </div>
-              <div>
-                <h3 className="font-semibold">Telepon:</h3>
-                <p>0821 - 1923 - 1293</p>
-              </div>
-            </div>
-            
-            <div className="flex items-start">
-              <div className="text-blue-600 mr-3">
-                <i className="fas fa-envelope text-xl"></i>
-              </div>
-              <div>
-                <h3 className="font-semibold">Email:</h3>
-                <p>info@youthmovement.org</p>
-              </div>
-            </div>
-          </div>
-          
-          <div>
-            <h3 className="font-semibold mb-3">Jam Operasional:</h3>
-            <p>Senin - Jumat: 09.00 - 17.00 WIB</p>
-            <p>Sabtu: 09.00 - 13.00 WIB</p>
-            <p>Minggu & Hari Libur: Tutup</p>
-          </div>
-        </div>
-        
-        <div>
-          <h2 className="text-xl font-semibold mb-4">Kirim Pesan</h2>
-          <form onSubmit={handleSubmit}>
-            <div className="mb-4">
-              <label htmlFor="name" className="block mb-1">Nama Lengkap</label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                className="w-full p-2 border rounded-md"
-                required
-              />
-            </div>
-            
-            <div className="mb-4">
-              <label htmlFor="email" className="block mb-1">Email</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                className="w-full p-2 border rounded-md"
-                required
-              />
-            </div>
-            
-            <div className="mb-4">
-              <label htmlFor="subject" className="block mb-1">Subjek</label>
-              <input
-                type="text"
-                id="subject"
-                name="subject"
-                value={formData.subject}
-                onChange={handleChange}
-                className="w-full p-2 border rounded-md"
-                required
-              />
-            </div>
-            
-            <div className="mb-4">
-              <label htmlFor="message" className="block mb-1">Pesan</label>
-              <textarea
-                id="message"
-                name="message"
-                value={formData.message}
-                onChange={handleChange}
-                rows="5"
-                className="w-full p-2 border rounded-md"
-                required
-              ></textarea>
-            </div>
-            
-            <button
-              type="submit"
-              className="bg-blue-600 text-white py-2 px-6 rounded-md hover:bg-blue-700 transition-colors"
-            >
-              Kirim Pesan
-            </button>
-          </form>
-        </div>
-      </div>
+        )}
+      </form>
     </div>
   );
 }
-
-export default Contact;

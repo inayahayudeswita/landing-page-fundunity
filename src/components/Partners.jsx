@@ -1,10 +1,4 @@
-import React from "react";
-import partner1 from "../assets/images/partner1.png";
-import partner2 from "../assets/images/partner2.png";
-import partner3 from "../assets/images/partner3.png";
-import partner4 from "../assets/images/partner4.png";
-import partner5 from "../assets/images/partner5.png";
-import partner6 from "../assets/images/partner6.png";
+import React, { useEffect, useState } from "react";
 import logoCMS from "../assets/images/logoCMS.jpg";
 
 import "swiper/css";
@@ -24,16 +18,52 @@ const colors = {
   lightText: "#5f6368",
 };
 
-const partners = [
-  { name: "UPI", logo: partner1 },
-  { name: "UIN", logo: partner2 },
-  { name: "BAJAX", logo: partner3 },
-  { name: "Kraft Heinz", logo: partner4 },
-  { name: "Unilever", logo: partner5 },
-  { name: "Nestle", logo: partner6 },
-];
+const API_BASE_URL = "https://backend-donatebank.vercel.app/v1/content/ourpartners";
 
 const Partners = () => {
+  const [partners, setPartners] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchPartners = async () => {
+      try {
+        const res = await fetch(API_BASE_URL);
+        if (!res.ok) throw new Error("Failed to fetch partners");
+        const data = await res.json();
+
+        // Map data to expected format if necessary
+        const formatted = data.map(item => ({
+          name: item.name,
+          logo: item.imageUrl || "", // fallback if no imageUrl
+        }));
+
+        setPartners(formatted);
+      } catch (error) {
+        console.error("Error loading partners:", error);
+        setPartners([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPartners();
+  }, []);
+
+  if (loading) {
+    return (
+      <section
+        style={{
+          padding: "80px 0",
+          textAlign: "center",
+          fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+          color: colors.dark,
+        }}
+      >
+        Loading partners...
+      </section>
+    );
+  }
+
   return (
     <section
       style={{
@@ -224,17 +254,36 @@ const Partners = () => {
                     filter: "drop-shadow(0 4px 6px rgba(0,0,0,0.05))",
                   }}
                 >
-                  <img
-                    src={partner.logo}
-                    alt={partner.name}
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "contain",
-                      borderRadius: "12px",
-                      transition: "filter 0.3s ease",
-                    }}
-                  />
+                  {partner.logo ? (
+                    <img
+                      src={partner.logo}
+                      alt={partner.name}
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "contain",
+                        borderRadius: "12px",
+                        transition: "filter 0.3s ease",
+                      }}
+                    />
+                  ) : (
+                    <div
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        color: colors.lightText,
+                        fontStyle: "italic",
+                        fontSize: "14px",
+                        border: `1px dashed ${colors.lightText}`,
+                        borderRadius: "12px",
+                      }}
+                    >
+                      No Image
+                    </div>
+                  )}
                 </div>
                 <h4
                   style={{
@@ -259,44 +308,27 @@ const Partners = () => {
       <div style={{ textAlign: "center", marginTop: "48px" }}>
         <button
           style={{
-            padding: "16px 40px",
-            fontSize: "17px",
-            fontWeight: "700",
-            borderRadius: "36px",
+            padding: "16px 60px",
+            fontSize: "19px",
+            fontWeight: "600",
+            color: colors.cardBg,
+            background: colors.primary,
+            borderRadius: "50px",
             border: "none",
-            background: `linear-gradient(135deg, ${colors.primary}, ${colors.accent})`,
-            color: "#fff",
             cursor: "pointer",
-            boxShadow: `0 8px 30px rgba(26, 115, 232, 0.4)`,
-            transition: "all 0.35s ease",
-            display: "inline-flex",
-            alignItems: "center",
-            gap: "12px",
-            userSelect: "none",
+            boxShadow: `0 15px 35px ${colors.primary}aa`,
+            transition: "background-color 0.3s ease",
           }}
+          onClick={() => window.open("https://www.partner-site.com", "_blank")}
           onMouseEnter={(e) => {
-            e.currentTarget.style.boxShadow = "0 12px 40px rgba(26, 115, 232, 0.7)";
-            e.currentTarget.style.transform = "scale(1.05)";
+            e.currentTarget.style.backgroundColor = colors.accent;
           }}
           onMouseLeave={(e) => {
-            e.currentTarget.style.boxShadow = `0 8px 30px rgba(26, 115, 232, 0.4)`;
-            e.currentTarget.style.transform = "scale(1)";
+            e.currentTarget.style.backgroundColor = colors.primary;
           }}
+          aria-label="View All Partners"
         >
-          View All Partners
-          <svg
-            width="22"
-            height="22"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="3"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            style={{ marginLeft: "8px" }}
-          >
-            <path d="M9 18L15 12L9 6" />
-          </svg>
+          View All
         </button>
       </div>
     </section>
