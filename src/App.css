@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.slider-image {
+  transition: transform 0.3s ease-in-out; /* Transition smooth for hover */
+}
+
+.slider-image:hover {
+  transform: translateY(-10px); /* Move image up by 10px on hover */
+}
