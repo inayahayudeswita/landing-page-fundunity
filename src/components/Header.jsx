@@ -32,15 +32,9 @@ export default function Header() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Fungsi untuk deteksi device mobile
-  const isMobileDevice = () => {
-    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    
     try {
       const response = await fetch("http://localhost:3000/v1/content/transaction", {
         method: "POST",
@@ -66,29 +60,15 @@ export default function Header() {
       const { redirectUrl } = data;
 
       if (redirectUrl) {
-        // Untuk mobile, gunakan pendekatan yang lebih robust
-        if (isMobileDevice()) {
-          // Tutup modal dulu untuk menghindari konflik
-          setShowDonateForm(false);
-          
-          // Tunggu sebentar untuk memastikan modal tertutup
-          setTimeout(() => {
-            // Untuk mobile, buka di tab yang sama
-            window.location.href = redirectUrl;
-          }, 300);
-        } else {
-          // Untuk desktop, bisa menggunakan window.open jika diinginkan
-          window.location.href = redirectUrl;
-        }
+        window.location.href = redirectUrl;
       } else {
         alert("Redirect URL tidak tersedia");
       }
     } catch (error) {
-      console.error("Error detail:", error);
       alert("Error saat membuat transaksi: " + error.message);
     } finally {
       setLoading(false);
-      // Reset form data
+      setShowDonateForm(false);
       setFormData({ nama: "", email: "", notes: "", amount: "" });
     }
   };
@@ -279,19 +259,18 @@ export default function Header() {
         )}
       </header>
 
-      {/* Modal Donate Form - Optimized for Mobile */}
+      {/* Modal Donate Form */}
       {showDonateForm && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[60] p-4">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-lg p-4 sm:p-6 w-full max-w-sm sm:max-w-md mx-4 relative max-h-[90vh] overflow-y-auto">
             <button
               onClick={closeDonateForm}
-              className="absolute top-2 right-2 text-gray-600 hover:text-gray-900 font-bold text-xl z-10"
+              className="absolute top-2 right-2 text-gray-600 hover:text-gray-900 font-bold text-xl"
               aria-label="Close"
-              type="button"
             >
               &times;
             </button>
-            <h2 className="text-lg sm:text-xl font-semibold mb-4 pr-8">Donate Now</h2>
+            <h2 className="text-lg sm:text-xl font-semibold mb-4">Donate Now</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label className="block text-sm font-medium mb-1" htmlFor="nama">
@@ -304,8 +283,7 @@ export default function Header() {
                   value={formData.nama}
                   onChange={handleChange}
                   required
-                  className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
-                  disabled={loading}
+                  className="w-full border border-gray-300 rounded px-3 py-2 text-sm"
                 />
               </div>
               <div>
@@ -319,22 +297,20 @@ export default function Header() {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
-                  disabled={loading}
+                  className="w-full border border-gray-300 rounded px-3 py-2 text-sm"
                 />
               </div>
               <div>
                 <label className="block text-sm font-medium mb-1" htmlFor="notes">
-                  Notes (Optional)
+                  Notes
                 </label>
                 <textarea
                   id="notes"
                   name="notes"
                   value={formData.notes}
                   onChange={handleChange}
-                  className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:border-blue-500 focus:outline-none resize-none"
+                  className="w-full border border-gray-300 rounded px-3 py-2 text-sm"
                   rows={3}
-                  disabled={loading}
                 />
               </div>
               <div>
@@ -345,20 +321,17 @@ export default function Header() {
                   id="amount"
                   name="amount"
                   type="number"
-                  min="1000"
-                  step="1000"
+                  min="1"
                   value={formData.amount}
                   onChange={handleChange}
                   required
-                  className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
-                  placeholder="Minimum 1000"
-                  disabled={loading}
+                  className="w-full border border-gray-300 rounded px-3 py-2 text-sm"
                 />
               </div>
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-blue-600 text-white font-semibold py-3 rounded hover:bg-blue-700 transition text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full bg-blue-600 text-white font-semibold py-2 rounded hover:bg-blue-700 transition text-sm"
               >
                 {loading ? "Processing..." : "Pay Now"}
               </button>
