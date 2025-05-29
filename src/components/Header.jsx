@@ -42,54 +42,112 @@ export default function Header() {
     setLoading(true);
     
     try {
-      const response = await fetch("http://localhost:3000/v1/content/transaction", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          nama: formData.nama,
-          email: formData.email,
-          amount: Number(formData.amount),
-          notes: formData.notes,
-        }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        alert("Gagal membuat transaksi: " + (data.error || "Unknown error"));
+      // Validasi form terlebih dahulu
+      if (!formData.nama.trim() || !formData.email.trim() || !formData.amount) {
+        alert("Mohon lengkapi semua field yang wajib diisi");
         setLoading(false);
         return;
       }
 
+      // Validasi email format
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(formData.email)) {
+        alert("Format email tidak valid");
+        setLoading(false);
+        return;
+      }
+
+      // Validasi amount minimum
+      if (Number(formData.amount) < 1000) {
+        alert("Minimum donasi adalah Rp 1.000");
+        setLoading(false);
+        return;
+      }
+
+      console.log("Mengirim data:", {
+        nama: formData.nama,
+        email: formData.email,
+        amount: Number(formData.amount),
+        notes: formData.notes,
+      });
+
+      // Gunakan URL yang lebih flexible untuk mobile
+      const apiUrl = window.location.hostname === 'localhost' 
+        ? "http://localhost:3000/v1/content/transaction"
+        : `${window.location.protocol}//${window.location.hostname}:3000/v1/content/transaction`;
+
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+        },
+        mode: 'cors', // Eksplisit set CORS mode
+        body: JSON.stringify({
+          nama: formData.nama.trim(),
+          email: formData.email.trim(),
+          amount: Number(formData.amount),
+          notes: formData.notes.trim(),
+        }),
+      });
+
+      console.log("Response status:", response.status);
+      console.log("Response headers:", response.headers);
+
+      // Cek apakah response adalah JSON
+      const contentType = response.headers.get("content-type");
+      if (!contentType || !contentType.includes("application/json")) {
+        throw new Error("Server tidak mengembalikan JSON response");
+      }
+
+      const data = await response.json();
+      console.log("Response data:", data);
+
+      if (!response.ok) {
+        throw new Error(data.error || data.message || `HTTP error! status: ${response.status}`);
+      }
+
       const { redirectUrl } = data;
 
-      if (redirectUrl) {
-        // Untuk mobile, gunakan pendekatan yang lebih robust
+      if (!redirectUrl) {
+        throw new Error("Redirect URL tidak tersedia dari server");
+      }
+
+      console.log("Redirect URL:", redirectUrl);
+
+      // Reset form terlebih dahulu
+      setFormData({ nama: "", email: "", notes: "", amount: "" });
+      
+      // Tutup modal
+      setShowDonateForm(false);
+      
+      // Tunggu sebentar untuk memastikan modal tertutup, lalu redirect
+      setTimeout(() => {
         if (isMobileDevice()) {
-          // Tutup modal dulu untuk menghindari konflik
-          setShowDonateForm(false);
-          
-          // Tunggu sebentar untuk memastikan modal tertutup
-          setTimeout(() => {
-            // Untuk mobile, buka di tab yang sama
-            window.location.href = redirectUrl;
-          }, 300);
+          // Untuk mobile, gunakan location.replace untuk menghindari masalah back button
+          window.location.replace(redirectUrl);
         } else {
-          // Untuk desktop, bisa menggunakan window.open jika diinginkan
           window.location.href = redirectUrl;
         }
-      } else {
-        alert("Redirect URL tidak tersedia");
-      }
+      }, 500);
+
     } catch (error) {
-      console.error("Error detail:", error);
-      alert("Error saat membuat transaksi: " + error.message);
+      console.error("Error lengkap:", error);
+      
+      // Pesan error yang lebih informatif
+      let errorMessage = "Terjadi kesalahan saat memproses donasi";
+      
+      if (error.name === 'TypeError' && error.message.includes('Failed to fetch')) {
+        errorMessage = "Tidak dapat terhubung ke server. Pastikan koneksi internet Anda stabil dan server berjalan.";
+      } else if (error.message.includes('CORS')) {
+        errorMessage = "Masalah akses server. Silakan coba lagi atau hubungi administrator.";
+      } else if (error.message) {
+        errorMessage = error.message;
+      }
+      
+      alert(errorMessage);
     } finally {
       setLoading(false);
-      // Reset form data
-      setFormData({ nama: "", email: "", notes: "", amount: "" });
     }
   };
 

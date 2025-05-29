@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import Header from './components/Header';
+import DebugDonation from './components/DebugDonation'
 import Hero from './components/Hero';
 import Gallery from './components/Gallery';
 import ImageSlider from './components/ImageSlider';
