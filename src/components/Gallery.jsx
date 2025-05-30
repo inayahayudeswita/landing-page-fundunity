@@ -1,18 +1,10 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FaArrowRight, FaCameraRetro } from "react-icons/fa";
 import video1 from "../assets/images/video1.mp4";
-import img1 from "../assets/images/image1.jpg";
-import img2 from "../assets/images/image2.jpg";
-import img3 from "../assets/images/image3.jpg";
 
 const colors = {
-  primary: "#1a73e8",
-  secondary: "#4285f4",
-  accent: "#34a853",
-  dark: "#1a237e",
-  lightText: "#5f6368",
   bgGradient: "linear-gradient(180deg, #e8f0fe 0%, #ffffff 100%)",
 };
 
@@ -40,6 +32,25 @@ const itemVariants = {
 };
 
 const Gallery = () => {
+  const [images, setImages] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("https://backend-donatebank.vercel.app/v1/content/imageslider")
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to fetch images");
+        return res.json();
+      })
+      .then((data) => {
+        setImages(data.slice(0, 3)); // ambil 3 gambar saja
+        setLoading(false);
+      })
+      .catch(() => {
+        setImages([]);
+        setLoading(false);
+      });
+  }, []);
+
   return (
     <section
       className="py-24 px-6 md:px-12"
@@ -61,7 +72,8 @@ const Gallery = () => {
           </h2>
           <div className="mx-auto mt-4 w-20 h-1 bg-gradient-to-r from-blue-500 via-green-400 to-yellow-400 rounded-full shadow-md"></div>
           <p className="text-gray-600 max-w-3xl mx-auto mt-6 text-lg leading-relaxed">
-            Discover the stories behind our mission. Watch impactful videos and see the powerful images that tell stories of change.
+            Discover the stories behind our mission. Watch impactful videos and
+            see the powerful images that tell stories of change.
           </p>
         </motion.header>
 
@@ -78,20 +90,18 @@ const Gallery = () => {
             <video
               controls
               className="w-full h-60 object-cover"
-              poster={img1}
+              poster={images[0]?.imageUrl || ""}
               preload="metadata"
             >
               <source src={video1} type="video/mp4" />
               Your browser does not support the video tag.
             </video>
             <div className="p-6 text-center">
-              <Link
-                to="/about"
-                className="inline-flex items-center gap-2 text-white bg-gradient-to-r from-blue-600 to-green-500 px-6 py-3 rounded-full font-semibold shadow-lg hover:brightness-110 transition"
-              >
-                Watch More Videos <FaArrowRight />
-              </Link>
-            </div>
+  <p className="text-lg font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-green-500">
+    Our Mission in Motion
+  </p>
+</div>
+
           </motion.div>
 
           {/* Text Block */}
@@ -108,7 +118,7 @@ const Gallery = () => {
               difference. These moments remind us why community matters.
             </p>
             <Link
-              to="/about"
+              to="/moregallery"
               className="inline-flex items-center gap-2 bg-white text-blue-700 px-6 py-3 rounded-full font-bold shadow-lg hover:bg-gray-100 transition"
             >
               View Full Gallery <FaArrowRight />
@@ -120,19 +130,25 @@ const Gallery = () => {
             className="grid grid-cols-3 gap-4"
             variants={itemVariants}
           >
-            {[img1, img2, img3].map((img, i) => (
-              <motion.div
-                key={i}
-                className="rounded-xl overflow-hidden shadow-md hover:shadow-xl hover:scale-110 transition duration-500"
-              >
-                <img
-                  src={img}
-                  alt={`Gallery ${i + 1}`}
-                  className="w-full h-full object-cover"
-                  loading="lazy"
-                />
-              </motion.div>
-            ))}
+            {loading ? (
+              <p className="col-span-3 text-center text-gray-500">
+                Loading images...
+              </p>
+            ) : (
+              images.map((img, i) => (
+                <motion.div
+                  key={img.id || i}
+                  className="rounded-xl overflow-hidden shadow-md hover:shadow-xl hover:scale-110 transition duration-500"
+                >
+                  <img
+                    src={img.imageUrl}
+                    alt={img.title || `Gallery ${i + 1}`}
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                  />
+                </motion.div>
+              ))
+            )}
           </motion.div>
         </motion.div>
       </motion.div>

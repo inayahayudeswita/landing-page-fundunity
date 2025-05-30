@@ -141,7 +141,10 @@ export default function Header() {
                           Program
                         </Link>
                         <Link to="/focusareas" className="block px-4 py-2 text-sm hover:bg-blue-700" role="menuitem">
-                          FocusAreas
+                          Focus Areas
+                        </Link>
+                         <Link to="/moregallery" className="block px-4 py-2 text-sm hover:bg-blue-700" role="menuitem">
+                          More Gallery
                         </Link>
                       </>
                     )}

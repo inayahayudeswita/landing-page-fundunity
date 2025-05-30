@@ -14,6 +14,7 @@ import ProgramDetail from './pages/WhatWeDo/ProgramDetail'; // Detail program
 
 // Import komponen FocusAreas, Faqs, dan GetInvolved yang sudah kamu setuju dan aku buatkan:
 import FocusAreas from './pages/WhatWeDo/FocusAreas';
+import MoreGallery from './pages/WhatWeDo/MoreGallery';
 import Faqs from './pages/MovingTogether/Faqs';
 import GetInvolved from './pages/MovingTogether/GetInvolved';
 
@@ -46,7 +47,8 @@ function App() {
               {/* Static pages */}
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
-              <Route path="/focusareas" element={<FocusAreas />} />  {/* huruf kecil di URL lebih umum */}
+              <Route path="/focusareas" element={<FocusAreas />} />  
+              <Route path="/moregallery" element={<MoreGallery />} />  
               <Route path="/faqs" element={<Faqs />} />
               <Route path="/getinvolved" element={<GetInvolved />} />
 

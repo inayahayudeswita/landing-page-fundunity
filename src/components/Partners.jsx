@@ -303,34 +303,6 @@ const Partners = () => {
           ))}
         </Swiper>
       </div>
-
-      {/* View All Button */}
-      <div style={{ textAlign: "center", marginTop: "48px" }}>
-        <button
-          style={{
-            padding: "16px 60px",
-            fontSize: "19px",
-            fontWeight: "600",
-            color: colors.cardBg,
-            background: colors.primary,
-            borderRadius: "50px",
-            border: "none",
-            cursor: "pointer",
-            boxShadow: `0 15px 35px ${colors.primary}aa`,
-            transition: "background-color 0.3s ease",
-          }}
-          onClick={() => window.open("https://www.partner-site.com", "_blank")}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.backgroundColor = colors.accent;
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.backgroundColor = colors.primary;
-          }}
-          aria-label="View All Partners"
-        >
-          View All
-        </button>
-      </div>
     </section>
   );
 };
