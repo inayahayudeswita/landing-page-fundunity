@@ -36,7 +36,7 @@ export default function Header() {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await fetch("http://localhost:3000/v1/content/transaction", {
+      const response = await fetch("https://backend-donatebank.vercel.app/v1/content/transaction", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
