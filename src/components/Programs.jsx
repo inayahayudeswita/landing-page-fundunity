@@ -7,7 +7,7 @@ function Programs() {
   useEffect(() => {
     const fetchPrograms = async () => {
       try {
-        const res = await fetch("https://backendd-fundunity.up.railway.app/v1/content/programs");
+        const res = await fetch("https://backendd-fundunity-production.up.railway.app/v1/content/program");
         const data = await res.json();
         setProgramData(data);
       } catch (error) {
