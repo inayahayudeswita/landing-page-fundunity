@@ -33,106 +33,69 @@ export default function Header() {
   };
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  setLoading(true);
-  try {
-    const res = await fetch("https://backendd-fundunity-production.up.railway.app/v1/content/transaction", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        nama: formData.nama,
-        email: formData.email,
-        amount: Number(formData.amount),
-        notes: formData.notes,
-      }),
-    });
+    e.preventDefault();
+    setLoading(true);
+    try {
+       const response = await fetch("https://backendd-fundunity-production.up.railway.app/v1/content/transaction", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          nama: formData.nama,
+          email: formData.email,
+          amount: Number(formData.amount),
+          notes: formData.notes,
+        }),
+      });
 
-    const data = await res.json();
+      const data = await response.json();
 
-    if (!res.ok || !data.snapToken) {
-      alert("Transaksi gagal: " + (data.message || "Unknown error"));
-      return;
+      if (!response.ok) {
+        alert("Gagal membuat transaksi: " + (data.error || "Unknown error"));
+        setLoading(false);
+        return;
+      }
+
+      const { redirectUrl } = data;
+
+      if (redirectUrl) {
+        window.location.href = redirectUrl;
+      } else {
+        alert("Redirect URL tidak tersedia");
+      }
+    } catch (error) {
+      alert("Error saat membuat transaksi: " + error.message);
+    } finally {
+      setLoading(false);
+      setShowDonateForm(false);
+      setFormData({ nama: "", email: "", notes: "", amount: "" });
     }
-
-    // === GUNAKAN POPUP Snap ===
-    window.snap.pay(data.snapToken, {
-      onSuccess: (result) => {
-        alert("Pembayaran berhasil!");
-        console.log(result);
-      },
-      onPending: (result) => {
-        alert("Menunggu pembayaran...");
-        console.log(result);
-      },
-      onError: (error) => {
-        alert("Terjadi kesalahan pembayaran!");
-        console.error(error);
-      },
-      onClose: () => {
-        alert("Popup ditutup tanpa menyelesaikan pembayaran.");
-      },
-    });
-
-  } catch (err) {
-    alert("Gagal terhubung ke server: " + err.message);
-  } finally {
-    setLoading(false);
-    setShowDonateForm(false);
-    setFormData({ nama: "", email: "", notes: "", amount: "" });
-  }
-};
-
-  const desktopMenus = {
-    who: [
-      { label: "About YMP", to: "/about" },
-      { label: "Contact", to: "/contact" },
-      { label: "Home", to: "/" },
-    ],
-    what: [
-      { label: "Program", to: "/program" },
-      { label: "Focus Areas", to: "/focusareas" },
-      { label: "More Gallery", to: "/moregallery" },
-    ],
-    moving: [
-      { label: "Get Involved", to: "/getinvolved" },
-      { label: "FAQs", to: "/faqs" },
-    ],
-  };
-
-  const mobileMenus = {
-    who: [
-      { label: "About YMP", to: "/about" },
-      { label: "Contact", to: "/contact" },
-      { label: "Home", to: "/" },
-    ],
-    what: [
-      { label: "Program", to: "/program" },
-      { label: "Campaign", to: "/campaign" },
-    ],
-    moving: [
-      { label: "Volunteers", to: "/volunteers" },
-      { label: "Donation in Nature", to: "/donationinnature" },
-    ],
   };
 
   return (
     <>
       <header
         className={`fixed w-full top-0 z-50 transition-all duration-300 ${
-          scrolled ? "bg-black bg-opacity-90 py-2 shadow-lg" : "bg-black bg-opacity-70 py-3 md:py-4"
+          scrolled
+            ? "bg-black bg-opacity-90 py-2 shadow-lg"
+            : "bg-black bg-opacity-70 py-3 md:py-4"
         }`}
       >
         <div className="container mx-auto px-4 sm:px-6 flex justify-between items-center">
+          {/* Logo */}
           <Link to="/" className="flex-shrink-0">
             <img src={logoCMS} alt="YMP Logo" className="h-10 sm:h-12 md:h-14 w-auto" />
           </Link>
 
+          {/* Desktop Navigation */}
           <nav className="hidden lg:flex space-x-4 xl:space-x-6 text-white font-medium">
-            {Object.keys(desktopMenus).map((menu) => (
+            {["who", "what", "moving"].map((menu) => (
               <div key={menu} className="relative group">
                 <button
                   onClick={() => toggleDropdown(menu)}
                   className="flex items-center gap-1 hover:text-blue-400 transition-colors text-sm xl:text-base px-2 py-1"
+                  aria-expanded={activeDropdown === menu}
                 >
                   {menu === "who" && "Who We Are"}
                   {menu === "what" && "What We Do"}
@@ -144,25 +107,64 @@ export default function Header() {
                     viewBox="0 0 24 24"
                     stroke="currentColor"
                   >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 9l-7 7-7-7"
+                    />
                   </svg>
                 </button>
 
                 {activeDropdown === menu && (
-                  <div className="absolute top-full left-0 mt-2 w-48 rounded-lg shadow-lg bg-blue-900 z-50">
-                    {desktopMenus[menu].map((item) => (
-                      <Link
-                        key={item.to}
-                        to={item.to}
-                        className="block px-4 py-2 text-sm hover:bg-blue-700"
-                      >
-                        {item.label}
-                      </Link>
-                    ))}
+                  <div
+                    className="absolute top-full left-0 mt-2 w-48 rounded-lg shadow-lg bg-blue-900 z-50"
+                    role="menu"
+                  >
+                    {menu === "who" && (
+                      <>
+                        <Link to="/about" className="block px-4 py-2 text-sm hover:bg-blue-700" role="menuitem">
+                          About YMP
+                        </Link>
+                        <Link to="/contact" className="block px-4 py-2 text-sm hover:bg-blue-700" role="menuitem">
+                          Contact
+                        </Link>
+                        <Link to="/" className="block px-4 py-2 text-sm hover:bg-blue-700" role="menuitem">
+                          Home
+                        </Link>
+                      </>
+                    )}
+
+                    {menu === "what" && (
+                      <>
+                        <Link to="/program" className="block px-4 py-2 text-sm hover:bg-blue-700" role="menuitem">
+                          Program
+                        </Link>
+                        <Link to="/focusareas" className="block px-4 py-2 text-sm hover:bg-blue-700" role="menuitem">
+                          Focus Areas
+                        </Link>
+                         <Link to="/moregallery" className="block px-4 py-2 text-sm hover:bg-blue-700" role="menuitem">
+                          More Gallery
+                        </Link>
+                      </>
+                    )}
+
+                    {menu === "moving" && (
+                      <>
+                        <Link to="/getinvolved" className="block px-4 py-2 text-sm hover:bg-blue-700" role="menuitem">
+                          Get Involved
+                        </Link>
+                        <Link to="/faqs" className="block px-4 py-2 text-sm hover:bg-blue-700" role="menuitem">
+                          FAQs
+                        </Link>
+                      </>
+                    )}
                   </div>
                 )}
               </div>
             ))}
+
+            {/* Desktop Donate Button */}
             <button
               onClick={openDonateForm}
               className="ml-2 xl:ml-4 px-3 xl:px-5 py-2 rounded-full bg-gradient-to-r from-blue-600 to-blue-400 text-white font-semibold shadow-lg hover:brightness-110 transition text-sm xl:text-base"
@@ -171,6 +173,7 @@ export default function Header() {
             </button>
           </nav>
 
+          {/* Mobile/Tablet Menu Button and Donate */}
           <div className="flex items-center space-x-2 lg:hidden">
             <button
               onClick={openDonateForm}
@@ -178,8 +181,8 @@ export default function Header() {
             >
               Donate
             </button>
-            <button
-              className="text-white p-1"
+            <button 
+              className="text-white p-1" 
               aria-label="Open menu"
               onClick={toggleMobileMenu}
             >
@@ -190,17 +193,23 @@ export default function Header() {
                 viewBox="0 0 24 24"
                 stroke="currentColor"
               >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
               </svg>
             </button>
           </div>
         </div>
 
+        {/* Mobile Menu */}
         {mobileMenuOpen && (
           <div className="lg:hidden bg-black bg-opacity-95 border-t border-gray-700">
             <div className="container mx-auto px-4 py-4">
               <nav className="space-y-4">
-                {Object.keys(mobileMenus).map((menu) => (
+                {["who", "what", "moving"].map((menu) => (
                   <div key={menu}>
                     <button
                       onClick={() => toggleDropdown(menu)}
@@ -213,7 +222,7 @@ export default function Header() {
                       </span>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className={`h-4 w-4 transition-transform ${activeDropdown === menu ? "rotate-180" : ""}`}
+                        className={`h-4 w-4 transition-transform ${activeDropdown === menu ? 'rotate-180' : ''}`}
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -221,17 +230,28 @@ export default function Header() {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                       </svg>
                     </button>
+
                     {activeDropdown === menu && (
                       <div className="ml-4 mt-2 space-y-2">
-                        {mobileMenus[menu].map((item) => (
-                          <Link
-                            key={item.to}
-                            to={item.to}
-                            className="block text-blue-200 hover:text-white py-1"
-                          >
-                            {item.label}
-                          </Link>
-                        ))}
+                        {menu === "who" && (
+                          <>
+                            <Link to="/about" className="block text-blue-200 hover:text-white py-1">About YMP</Link>
+                            <Link to="/contact" className="block text-blue-200 hover:text-white py-1">Contact</Link>
+                            <Link to="/" className="block text-blue-200 hover:text-white py-1">Home</Link>
+                          </>
+                        )}
+                        {menu === "what" && (
+                          <>
+                            <Link to="/program" className="block text-blue-200 hover:text-white py-1">Program</Link>
+                            <Link to="/campaign" className="block text-blue-200 hover:text-white py-1">Campaign</Link>
+                          </>
+                        )}
+                        {menu === "moving" && (
+                          <>
+                            <Link to="/volunteers" className="block text-blue-200 hover:text-white py-1">Volunteers</Link>
+                            <Link to="/donationinnature" className="block text-blue-200 hover:text-white py-1">Donation in Nature</Link>
+                          </>
+                        )}
                       </div>
                     )}
                   </div>
@@ -242,6 +262,7 @@ export default function Header() {
         )}
       </header>
 
+      {/* Modal Donate Form */}
       {showDonateForm && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-lg p-4 sm:p-6 w-full max-w-sm sm:max-w-md mx-4 relative max-h-[90vh] overflow-y-auto">
@@ -255,7 +276,9 @@ export default function Header() {
             <h2 className="text-lg sm:text-xl font-semibold mb-4">Donate Now</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-sm font-medium mb-1" htmlFor="nama">Nama</label>
+                <label className="block text-sm font-medium mb-1" htmlFor="nama">
+                  Nama
+                </label>
                 <input
                   id="nama"
                   name="nama"
@@ -267,7 +290,9 @@ export default function Header() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-1" htmlFor="email">Email</label>
+                <label className="block text-sm font-medium mb-1" htmlFor="email">
+                  Email
+                </label>
                 <input
                   id="email"
                   name="email"
@@ -279,7 +304,9 @@ export default function Header() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-1" htmlFor="notes">Notes</label>
+                <label className="block text-sm font-medium mb-1" htmlFor="notes">
+                  Notes
+                </label>
                 <textarea
                   id="notes"
                   name="notes"
@@ -290,7 +317,9 @@ export default function Header() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-1" htmlFor="amount">Amount (IDR)</label>
+                <label className="block text-sm font-medium mb-1" htmlFor="amount">
+                  Amount (IDR)
+                </label>
                 <input
                   id="amount"
                   name="amount"
