@@ -262,76 +262,76 @@ export default function Header() {
         )}
       </header>
 
-      {/* Donate Modal */}
-      {showDonateForm && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 p-4"
-          onClick={toggleDonateForm}
+      {/* Modal Donate Form */}
+     {showDonateForm && (
+  <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+    <div
+      className="bg-white rounded-xl max-w-md w-full p-6 sm:p-8 relative max-h-[90vh] overflow-y-auto"
+      onClick={(e) => e.stopPropagation()}
+    >
+      {/* Close Button */}
+      <button
+        onClick={closeDonateForm}
+        className="absolute top-3 sm:top-4 right-3 sm:right-4 text-gray-600 hover:text-gray-900 font-bold text-xl sm:text-2xl"
+        aria-label="Close modal"
+      >
+        &times;
+      </button>
+
+      {/* Title */}
+      <h2 className="text-xl sm:text-2xl font-bold mb-4 text-center text-blue-700">
+        Donate Now
+      </h2>
+
+      {/* Form */}
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <input
+          required
+          name="nama"
+          type="text"
+          value={formData.nama}
+          onChange={handleChange}
+          placeholder="Full Name"
+          className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
+        />
+        <input
+          required
+          name="email"
+          type="email"
+          value={formData.email}
+          onChange={handleChange}
+          placeholder="Email Address"
+          className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
+        />
+        <input
+          required
+          name="amount"
+          type="number"
+          min="1"
+          value={formData.amount}
+          onChange={handleChange}
+          placeholder="Donation Amount (IDR)"
+          className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
+        />
+        <textarea
+          name="notes"
+          value={formData.notes}
+          onChange={handleChange}
+          placeholder="Add a message or description (optional)"
+          className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
+          rows={3}
+        />
+        <button
+          type="submit"
+          disabled={loading}
+          className="w-full py-2 bg-gradient-to-r from-blue-600 to-blue-400 text-white rounded-lg font-bold hover:brightness-110 transition text-sm"
         >
-          <div
-            className="bg-white rounded-xl max-w-md w-full p-6 sm:p-8 relative max-h-[90vh] overflow-y-auto"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <h2 className="text-xl sm:text-2xl font-bold mb-4 text-center text-blue-700">
-              Donate Now
-            </h2>
-            <form onSubmit={handleSubmit}>
-              <input
-                required
-                name="name"
-                type="text"
-                value={formData.name}
-                onChange={handleChange}
-                placeholder="Full Name"
-                className="w-full mb-4 px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg text-sm sm:text-base"
-              />
-              <input
-                required
-                name="email"
-                type="email"
-                value={formData.email}
-                onChange={handleChange}
-                pattern="[a-zA-Z0-9._%+-]+@gmail\.com"
-                title="Please enter a valid Gmail address"
-                placeholder="Email Address"
-                className="w-full mb-4 px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg text-sm sm:text-base"
-              />
-              <input
-                required
-                name="amount"
-                type="number"
-                value={formData.amount}
-                onChange={handleChange}
-                placeholder="Donation Amount (IDR)"
-                min={1000}
-                className="w-full mb-4 px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg text-sm sm:text-base"
-              />
-              <textarea
-                name="message"
-                value={formData.message}
-                onChange={handleChange}
-                rows={4}
-                placeholder="Add a message or description (optional)"
-                className="w-full mb-6 px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg text-sm sm:text-base resize-none"
-              />
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full py-2 sm:py-3 bg-gradient-to-r from-blue-600 to-blue-400 text-white rounded-lg font-bold hover:brightness-110 transition text-sm sm:text-base"
-              >
-                {loading ? "Processing..." : "Complete Donation"}
-              </button>
-            </form>
-            <button
-              onClick={toggleDonateForm}
-              className="absolute top-3 sm:top-4 right-3 sm:right-4 text-gray-600 hover:text-gray-900 font-bold text-xl sm:text-2xl"
-              aria-label="Close modal"
-            >
-              &times;
-            </button>
-          </div>
-        </div>
-      )}
+          {loading ? "Processing..." : "Pay Now"}
+        </button>
+      </form>
+    </div>
+  </div>
+)}
     </>
   );
 }
