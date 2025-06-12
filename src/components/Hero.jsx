@@ -47,11 +47,11 @@ export default function Hero() {
         return;
       }
 
-      const { redirectUrl } = data;
-      if (redirectUrl) {
-        window.location.href = redirectUrl;
+      // Redirect ke URL yang diberikan backend, fallback ke homepage
+      if (data.redirectUrl) {
+        window.location.href = data.redirectUrl;
       } else {
-        alert("Redirect URL tidak tersedia");
+        window.location.href = "https://landing-page-fundunity.vercel.app/";
       }
     } catch (error) {
       alert("Error saat membuat transaksi: " + error.message);
@@ -86,8 +86,7 @@ export default function Hero() {
               Together, Creating Change with YukMariProject
             </h1>
             <p className="text-base sm:text-lg md:text-xl text-blue-100 max-w-2xl drop-shadow mb-6 sm:mb-8 leading-relaxed">
-              Join us in making a meaningful impact for those in need and building
-              a better future.
+              Join us in making a meaningful impact for those in need and building a better future.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
               <button
@@ -167,13 +166,6 @@ export default function Hero() {
                 {loading ? "Processing..." : "Complete Donation"}
               </button>
             </form>
-            <button
-              onClick={toggleDonateForm}
-              className="absolute top-3 sm:top-4 right-3 sm:right-4 text-gray-600 hover:text-gray-900 font-bold text-xl sm:text-2xl"
-              aria-label="Close modal"
-            >
-              &times;
-            </button>
           </div>
         </div>
       )}
