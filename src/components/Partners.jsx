@@ -18,7 +18,7 @@ const colors = {
   lightText: "#5f6368",
 };
 
-const API_BASE_URL = "https://backend-donatebank.vercel.app/v1/content/ourpartners";
+const API_BASE_URL = "https://backendd-fundunity.up.railway.app/v1/content/ourpartners";
 
 const Partners = () => {
   const [partners, setPartners] = useState([]);

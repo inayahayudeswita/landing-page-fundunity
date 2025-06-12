@@ -36,7 +36,7 @@ const Gallery = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("https://backend-donatebank.vercel.app/v1/content/imageslider")
+     fetch("https://backendd-fundunity.up.railway.app/v1/content/imageslider")
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch images");
         return res.json();

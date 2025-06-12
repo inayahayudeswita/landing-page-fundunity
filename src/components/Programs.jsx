@@ -7,7 +7,7 @@ function Programs() {
   useEffect(() => {
     const fetchPrograms = async () => {
       try {
-        const res = await fetch("https://backend-donatebank.vercel.app/v1/content/programs");
+        const res = await fetch("https://backendd-fundunity.up.railway.app/v1/content/programs");
         const data = await res.json();
         setProgramData(data);
       } catch (error) {
