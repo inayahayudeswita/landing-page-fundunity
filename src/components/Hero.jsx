@@ -148,7 +148,7 @@ export default function Hero() {
                 value={formData.amount}
                 onChange={handleChange}
                 placeholder="Donation Amount (IDR)"
-                min={1000}
+                min={1}
                 className="w-full mb-4 px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg text-sm sm:text-base"
               />
               <textarea

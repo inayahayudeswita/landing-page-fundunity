@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import Header from './components/Header';
-import DebugDonation from './components/DebugDonation'
 import Hero from './components/Hero';
 import Gallery from './components/Gallery';
 import ImageSlider from './components/ImageSlider';
@@ -17,9 +16,9 @@ import FocusAreas from './pages/WhatWeDo/FocusAreas';
 import MoreGallery from './pages/WhatWeDo/MoreGallery';
 import Faqs from './pages/MovingTogether/Faqs';
 import GetInvolved from './pages/MovingTogether/GetInvolved';
-
 import Contact from './pages/WhoWeAre/Contact';
 import About from './pages/WhoWeAre/About';
+import ThankYou from "./pages/ThankYou";
 import ErrorBoundary from './components/ErrorBoundary';
 
 function App() {
@@ -51,6 +50,7 @@ function App() {
               <Route path="/moregallery" element={<MoreGallery />} />  
               <Route path="/faqs" element={<Faqs />} />
               <Route path="/getinvolved" element={<GetInvolved />} />
+              <Route path="/thankyou" element={<ThankYou />} />
 
               {/* Program routes */}
               <Route path="/program" element={<Programs />} />               {/* List of programs */}
