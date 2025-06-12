@@ -1,13 +1,76 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import heroImage from "../assets/images/hero6.jpg";
-import colors from "../utils/colors";
 
 export default function Hero() {
   const [showDonateForm, setShowDonateForm] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    amount: "",
+    message: "",
+  });
+
   const navigate = useNavigate();
 
   const toggleDonateForm = () => setShowDonateForm((v) => !v);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch(
+        "https://backendd-fundunity-production.up.railway.app/v1/content/transaction",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            nama: formData.name,
+            email: formData.email,
+            amount: Number(formData.amount),
+            notes: formData.message,
+          }),
+        }
+      );
+
+      const result = await response.json();
+
+      if (result.snapToken) {
+        window.snap.pay(result.snapToken, {
+          onSuccess: function (res) {
+            console.log("Payment Success:", res);
+            alert("Thank you! Donation successful.");
+            setShowDonateForm(false);
+          },
+          onPending: function () {
+            alert("Donation is pending. Please complete payment.");
+          },
+          onError: function (err) {
+            console.error("Payment Error:", err);
+            alert("Oops! Something went wrong.");
+          },
+          onClose: function () {
+            console.log("Payment popup closed");
+          },
+        });
+      } else {
+        alert("Failed to get snapToken. Try again.");
+      }
+    } catch (error) {
+      console.error("Transaction Error:", error);
+      alert("Donation failed. Please try again.");
+    }
+  };
 
   return (
     <>
@@ -21,26 +84,22 @@ export default function Hero() {
       >
         <div className="container mx-auto z-10 max-w-7xl">
           <div className="max-w-4xl">
-            <h1
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight text-white drop-shadow-lg mb-4 sm:mb-6"
-              style={{ fontFamily: "'Poppins', sans-serif" }}
-            >
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white drop-shadow-lg mb-6">
               Together, Creating Change with YukMariProject
             </h1>
-            <p className="text-base sm:text-lg md:text-xl text-blue-100 max-w-2xl drop-shadow mb-6 sm:mb-8 leading-relaxed">
-              Join us in making a meaningful impact for those in need and building
-              a better future.
+            <p className="text-base sm:text-lg md:text-xl text-blue-100 mb-8 leading-relaxed">
+              Join us in making a meaningful impact for those in need and building a better future.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
+            <div className="flex flex-col sm:flex-row gap-4">
               <button
                 onClick={() => navigate("/gallery")}
-                className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-blue-600 to-blue-400 text-white font-semibold rounded-lg shadow-lg hover:brightness-110 transition transform hover:scale-105 text-sm sm:text-base"
+                className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:brightness-110 transition"
               >
                 Let's Get Moving
               </button>
               <button
                 onClick={toggleDonateForm}
-                className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 border border-white text-white rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition transform hover:scale-105 text-sm sm:text-base"
+                className="px-6 py-3 border border-white text-white rounded-lg hover:bg-white hover:text-blue-600 transition"
               >
                 Donate Now
               </button>
@@ -59,22 +118,18 @@ export default function Hero() {
             className="bg-white rounded-xl max-w-md w-full p-6 sm:p-8 relative max-h-[90vh] overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
           >
-            <h2 className="text-xl sm:text-2xl font-bold mb-4 text-center text-blue-700">
+            <h2 className="text-2xl font-bold mb-4 text-center text-blue-700">
               Donate Now
             </h2>
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                alert("Donation submitted! Thank you!");
-                setShowDonateForm(false);
-              }}
-            >
+            <form onSubmit={handleSubmit}>
               <input
                 required
                 name="name"
                 type="text"
                 placeholder="Full Name"
-                className="w-full mb-4 px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm sm:text-base"
+                value={formData.name}
+                onChange={handleInputChange}
+                className="w-full mb-4 px-4 py-3 border border-gray-300 rounded-lg"
               />
               <input
                 required
@@ -83,7 +138,9 @@ export default function Hero() {
                 placeholder="Email Address"
                 pattern="[a-zA-Z0-9._%+-]+@gmail\.com"
                 title="Please enter a valid Gmail address"
-                className="w-full mb-4 px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm sm:text-base"
+                value={formData.email}
+                onChange={handleInputChange}
+                className="w-full mb-4 px-4 py-3 border border-gray-300 rounded-lg"
               />
               <input
                 required
@@ -91,24 +148,28 @@ export default function Hero() {
                 type="number"
                 placeholder="Donation Amount (IDR)"
                 min={1000}
-                className="w-full mb-4 px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm sm:text-base"
+                value={formData.amount}
+                onChange={handleInputChange}
+                className="w-full mb-4 px-4 py-3 border border-gray-300 rounded-lg"
               />
               <textarea
                 name="message"
                 rows={4}
-                placeholder="Add a message or description (optional)"
-                className="w-full mb-6 px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm sm:text-base resize-none"
+                placeholder="Add a message (optional)"
+                value={formData.message}
+                onChange={handleInputChange}
+                className="w-full mb-6 px-4 py-3 border border-gray-300 rounded-lg resize-none"
               />
               <button
                 type="submit"
-                className="w-full py-2 sm:py-3 bg-gradient-to-r from-blue-600 to-blue-400 text-white rounded-lg font-bold hover:brightness-110 transition text-sm sm:text-base"
+                className="w-full py-3 bg-blue-600 text-white rounded-lg font-bold hover:brightness-110"
               >
                 Complete Donation
               </button>
             </form>
             <button
               onClick={toggleDonateForm}
-              className="absolute top-3 sm:top-4 right-3 sm:right-4 text-gray-600 hover:text-gray-900 font-bold text-xl sm:text-2xl"
+              className="absolute top-3 right-4 text-gray-600 hover:text-gray-900 text-2xl font-bold"
               aria-label="Close modal"
             >
               &times;
