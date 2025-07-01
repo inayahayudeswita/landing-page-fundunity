@@ -24,7 +24,7 @@ export default function Hero() {
     setLoading(true);
     try {
       const response = await fetch(
-        "https://backendd-fundunity-production.up.railway.app/v1/content/transaction",
+        "https://backendd-fundunity.vercel.app/v1/content/transaction",
         {
           method: "POST",
           headers: {

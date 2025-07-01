@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-const API_BASE_URL = 'https://backendd-fundunity-production.up.railway.app/v1/content/aboutus';
+const API_BASE_URL = 'https://backendd-fundunity.vercel.app/v1/content/aboutus';
 
 const AboutUs = () => {
   const [data, setData] = useState([]);
