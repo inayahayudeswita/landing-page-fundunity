@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import heroImage from "../assets/images/hero.png";
+import HeroFixed from "../assets/images/HeroFixed.png";
 
 export default function Hero() {
   const [showDonateForm, setShowDonateForm] = useState(false);
@@ -72,7 +72,7 @@ export default function Hero() {
       <section
         className="relative min-h-screen flex items-center px-4 sm:px-6 lg:px-8"
         style={{
-          backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.8), rgba(0,0,0,0.3)), url(${heroImage})`,
+          backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.8), rgba(0,0,0,0.3)), url(${HeroFixed})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
