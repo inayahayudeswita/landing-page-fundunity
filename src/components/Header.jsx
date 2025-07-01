@@ -82,7 +82,7 @@ export default function Header() {
       : "bg-black bg-opacity-70 py-2 md:py-2"
   }`}
 >
-  <div className="container mx-auto px-1 sm:px-3 flex justify-between items-center overflow-hidden">
+  <div className="container mx-auto px-4 sm:px-6 flex justify-between items-center overflow-hidden">
     <Link to="/" className="flex-shrink-0">
       <img src={LogoFix} alt="Logo" className="max-h-28 md:max-h-23 lg:max-h-23 w-auto" />
     </Link>
