@@ -124,7 +124,7 @@ export default function Header() {
                     {menu === "who" && (
                       <>
                         <Link to="/about" className="block px-4 py-2 text-sm hover:bg-blue-700" role="menuitem">
-                          About YMP
+                          About KRB
                         </Link>
                         <Link to="/contact" className="block px-4 py-2 text-sm hover:bg-blue-700" role="menuitem">
                           Contact
@@ -235,7 +235,7 @@ export default function Header() {
                       <div className="ml-4 mt-2 space-y-2">
                         {menu === "who" && (
                           <>
-                            <Link to="/about" className="block text-blue-200 hover:text-white py-1">About YMP</Link>
+                            <Link to="/about" className="block text-blue-200 hover:text-white py-1">About KRB</Link>
                             <Link to="/contact" className="block text-blue-200 hover:text-white py-1">Contact</Link>
                             <Link to="/" className="block text-blue-200 hover:text-white py-1">Home</Link>
                           </>

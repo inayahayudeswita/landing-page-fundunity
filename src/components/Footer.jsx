@@ -62,7 +62,7 @@ const Footer = () => {
       title: "Who We Are",
       icon: faUsers,
       links: [
-        { name: "About YMP", url: "/about" },
+        { name: "About KRB", url: "/about" },
         { name: "Partners", url: "/partners" },
         { name: "Contact Us", url: "/contact" }
       ]
@@ -134,7 +134,7 @@ const Footer = () => {
       {/* Main Footer */}
       <div className="py-16 container mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10">
         <div className="lg:col-span-2 space-y-6">
-          <h3 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-green-400 bg-clip-text text-transparent">FundUnity CMS</h3>
+          <h3 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-green-400 bg-clip-text text-transparent">Komunitas Ruang Berbagi</h3>
           <p className="text-gray-400">
             Helping individuals and organizations fund and support impactful causes for a better world.
           </p>
@@ -173,7 +173,7 @@ const Footer = () => {
             </a>
           ))}
         </div>
-        <p className="text-sm text-gray-500 mb-2">© {new Date().getFullYear()} FundUnity CMS. All rights reserved.</p>
+        <p className="text-sm text-gray-500 mb-2">© {new Date().getFullYear()} Komunitas Ruang Berbagi. All rights reserved.</p>
         <div className="flex justify-center gap-4 text-sm text-gray-500">
           <a href="#">Privacy Policy</a>
           <span>|</span>
