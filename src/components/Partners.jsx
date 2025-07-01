@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import logoCMS from "../assets/images/logoCMS.jpg";
+import LogoFix from "../assets/images/LogoFix.png";
 
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -93,7 +93,7 @@ const Partners = () => {
       {/* Main Logo */}
       <div
         style={{
-          marginBottom: "60px",
+          marginBottom: "20px",
           display: "flex",
           justifyContent: "center",
           filter: "drop-shadow(0 6px 15px rgba(0,0,0,0.12))",
@@ -107,12 +107,12 @@ const Partners = () => {
             borderRadius: "24px",
             boxShadow: `0 20px 50px rgba(26, 115, 232, 0.15)`,
             border: `3px solid ${colors.primary}`,
-            transform: "translateY(-12px)",
-            width: "320px",
+            transform: "translateY(-9px)",
+            width: "150px",
           }}
         >
           <img
-            src={logoCMS}
+            src={LogoFix}
             alt="Partner Banner"
             style={{
               width: "100%",
