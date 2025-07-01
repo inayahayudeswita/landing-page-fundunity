@@ -83,7 +83,7 @@ export default function Hero() {
               className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight text-white drop-shadow-lg mb-4 sm:mb-6"
               style={{ fontFamily: "'Poppins', sans-serif" }}
             >
-              Together, Creating Change with YukMariProject
+              Together, Creating Change with Komunitas Ruang Berbagi
             </h1>
             <p className="text-base sm:text-lg md:text-xl text-blue-100 max-w-2xl drop-shadow mb-6 sm:mb-8 leading-relaxed">
               Join us in making a meaningful impact for those in need and building a better future.

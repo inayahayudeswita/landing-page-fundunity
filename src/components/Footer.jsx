@@ -87,7 +87,7 @@ const Footer = () => {
 
   const contactInfo = [
     { icon: faPhone, text: "0852 - 1310 - 3997" },
-    { icon: faEnvelope, text: "yukmariproject@gmail.com" },
+    { icon: faEnvelope, text: "KomunitasRuangBeragi@gmail.com" },
     { icon: faMapMarkerAlt, text: "Bandung, Jawa Barat, Indonesia" }
   ];
 
