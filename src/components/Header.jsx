@@ -85,7 +85,7 @@ export default function Header() {
         <div className="container mx-auto px-4 sm:px-6 flex justify-between items-center">
           {/* Logo */}
           <Link to="/" className="flex-shrink-0">
-            <img src={logoCMS} alt="YMP Logo" className="h-10 sm:h-12 md:h-14 w-auto" />
+            <img src={Logo} alt="Logo" className="h-10 sm:h-12 md:h-14 w-auto" />
           </Link>
 
           {/* Desktop Navigation */}
