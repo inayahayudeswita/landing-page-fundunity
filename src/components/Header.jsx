@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import logoCMS from "../assets/images/logoCMS.jpg";
+import LogoFix from "../assets/images/LogoFix.png";
 
 export default function Header() {
   const [activeDropdown, setActiveDropdown] = useState(null);
@@ -75,19 +75,18 @@ export default function Header() {
 
   return (
     <>
-      <header
-        className={`fixed w-full top-0 z-50 transition-all duration-300 ${
-          scrolled
-            ? "bg-black bg-opacity-90 py-2 shadow-lg"
-            : "bg-black bg-opacity-70 py-3 md:py-4"
-        }`}
-      >
-        <div className="container mx-auto px-4 sm:px-6 flex justify-between items-center">
-          {/* Logo */}
-          <Link to="/" className="flex-shrink-0">
-            <img src={Logo} alt="Logo" className="h-10 sm:h-12 md:h-14 w-auto" />
-          </Link>
-
+     <header
+  className={`fixed w-full top-0 z-50 transition-all duration-300 ${
+    scrolled
+      ? "bg-black bg-opacity-90 py-1 shadow-lg"
+      : "bg-black bg-opacity-70 py-2 md:py-2"
+  }`}
+>
+  <div className="container mx-auto px-1 sm:px-3 flex justify-between items-center overflow-hidden">
+    <Link to="/" className="flex-shrink-0">
+      <img src={LogoFix} alt="Logo" className="max-h-28 md:max-h-23 lg:max-h-23 w-auto" />
+    </Link>
+    
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex space-x-4 xl:space-x-6 text-white font-medium">
             {["who", "what", "moving"].map((menu) => (

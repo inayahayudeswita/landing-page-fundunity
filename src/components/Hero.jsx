@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import heroImage from "../assets/images/hero.jpg";
+import heroImage from "../assets/images/hero.png";
 
 export default function Hero() {
   const [showDonateForm, setShowDonateForm] = useState(false);
