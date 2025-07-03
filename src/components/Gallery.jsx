@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";  
 import { motion } from "framer-motion";
-import { FaArrowRight, FaCameraRetro } from "react-icons/fa";
+import { FaCameraRetro, FaArrowRight } from "react-icons/fa";  // <-- tambahin FaArrowRight
 import video1 from "../assets/images/video1.mp4";
 
 const colors = {
@@ -36,13 +36,13 @@ const Gallery = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-     fetch("https://backendd-fundunity.vercel.app/v1/content/imageslider")
+    fetch("https://backendd-fundunity.vercel.app/v1/content/imageslider")
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch images");
         return res.json();
       })
       .then((data) => {
-        setImages(data.slice(0, 3)); // ambil 3 gambar saja
+        setImages(data.slice(0, 3));
         setLoading(false);
       })
       .catch(() => {
@@ -97,11 +97,10 @@ const Gallery = () => {
               Your browser does not support the video tag.
             </video>
             <div className="p-6 text-center">
-  <p className="text-lg font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-green-500">
-    Our Mission in Motion
-  </p>
-</div>
-
+              <p className="text-lg font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-green-500">
+                Our Mission in Motion
+              </p>
+            </div>
           </motion.div>
 
           {/* Text Block */}
@@ -117,12 +116,18 @@ const Gallery = () => {
               Our visual journey illustrates how small actions can create a big
               difference. These moments remind us why community matters.
             </p>
-            <Link
+            <NavLink
               to="/moregallery"
-              className="inline-flex items-center gap-2 bg-white text-blue-700 px-6 py-3 rounded-full font-bold shadow-lg hover:bg-gray-100 transition"
+              className={({ isActive }) =>
+                `inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold shadow-lg transition ${
+                  isActive
+                    ? "bg-blue-700 text-white"
+                    : "bg-white text-blue-700 hover:bg-gray-100"
+                }`
+              }
             >
-              View Full Gallery <FaArrowRight />
-            </Link>
+              More Gallery <FaArrowRight />
+            </NavLink>
           </motion.div>
 
           {/* Image Gallery */}
