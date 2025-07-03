@@ -92,8 +92,8 @@ const Footer = () => {
   ];
 
   const socialLinks = [
-    { name: "Instagram", icon: faInstagram, url: "#", color: "#e4405f" },
-    { name: "LinkedIn", icon: faLinkedinIn, url: "#", color: "#0077b5" }
+    { name: "Instagram", icon: faInstagram, url: "https://instagram.com/komunitasruangberbagi", color: "#e4405f" },
+    { name: "LinkedIn", icon: faLinkedinIn, url: "https://instagram.com/komunitasruangberbagi", color: "#0077b5" }
   ];
 
   return (

@@ -20,52 +20,65 @@ export default function Hero() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    try {
-      const response = await fetch(
-        "https://backendd-fundunity.vercel.app/v1/content/transaction",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            nama: formData.name,
-            email: formData.email,
-            amount: Number(formData.amount),
-            notes: formData.message,
-          }),
-        }
-      );
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        alert("Gagal membuat transaksi: " + (data.error || "Unknown error"));
-        setLoading(false);
-        return;
+  e.preventDefault();
+  setLoading(true);
+  try {
+    const response = await fetch(
+      "https://backendd-fundunity.vercel.app/v1/content/transaction",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          nama: formData.name,
+          email: formData.email,
+          amount: Number(formData.amount),
+          notes: formData.message,
+        }),
       }
+    );
 
-      // Redirect ke URL yang diberikan backend, fallback ke homepage
-      if (data.redirectUrl) {
-        window.location.href = data.redirectUrl;
-      } else {
-        window.location.href = "https://landing-page-fundunity.vercel.app/";
-      }
-    } catch (error) {
-      alert("Error saat membuat transaksi: " + error.message);
-    } finally {
+    const data = await response.json();
+
+    if (!response.ok) {
+      alert("Gagal membuat transaksi: " + (data.error || "Unknown error"));
       setLoading(false);
-      setShowDonateForm(false);
-      setFormData({
-        name: "",
-        email: "",
-        amount: "",
-        message: "",
-      });
+      return;
     }
-  };
+
+    if (data.snapToken) {
+      window.snap.pay(data.snapToken, {
+        onSuccess: function (result) {
+          alert("Pembayaran berhasil!");
+          navigate("/"); // atau redirect halaman sukses
+        },
+        onPending: function (result) {
+          alert("Pembayaran dalam proses, tunggu konfirmasi.");
+        },
+        onError: function (result) {
+          alert("Pembayaran gagal: " + result.status_message);
+        },
+        onClose: function () {
+          alert("Anda menutup popup pembayaran.");
+        },
+      });
+    } else if (data.redirectUrl) {
+      window.location.href = data.redirectUrl;
+    } else {
+      window.location.href = "https://landing-page-fundunity.vercel.app/";
+    }
+  } catch (error) {
+    alert("Error saat membuat transaksi: " + error.message);
+  } finally {
+    setLoading(false);
+    setShowDonateForm(false);
+    setFormData({
+      name: "",
+      email: "",
+      amount: "",
+      message: "",
+    });
+  }
+};
 
   return (
     <>
@@ -90,7 +103,7 @@ export default function Hero() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
               <button
-                onClick={() => navigate("/gallery")}
+                onClick={() => navigate("/About")}
                 className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-blue-600 to-blue-400 text-white font-semibold rounded-lg shadow-lg hover:brightness-110 transition transform hover:scale-105 text-sm sm:text-base"
               >
                 Let's Get Moving
