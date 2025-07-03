@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-const API_URL = "https://backend-donatebank.vercel.app/v1/content/imageslider";
+const API_URL = "https://backendd-fundunity.vercel.app/v1/content/imageslider";
 
 const MoreGallery = () => {
   const [images, setImages] = useState([]);
