@@ -240,18 +240,30 @@ export default function Header() {
                             <Link to="/" className="block text-blue-200 hover:text-white py-1">Home</Link>
                           </>
                         )}
-                        {menu === "what" && (
-                          <>
-                            <Link to="/program" className="block text-blue-200 hover:text-white py-1">Program</Link>
-                            <Link to="/campaign" className="block text-blue-200 hover:text-white py-1">Campaign</Link>
-                          </>
-                        )}
-                        {menu === "moving" && (
-                          <>
-                            <Link to="/volunteers" className="block text-blue-200 hover:text-white py-1">Volunteers</Link>
-                            <Link to="/donationinnature" className="block text-blue-200 hover:text-white py-1">Donation in Nature</Link>
-                          </>
-                        )}
+                       {menu === "what" && (
+  <>
+    <Link to="/program" className="block text-blue-200 hover:text-white py-1">
+      Program
+    </Link>
+    <Link to="/focusareas" className="block text-blue-200 hover:text-white py-1">
+      Focus Areas
+    </Link>
+    <Link to="/moregallery" className="block text-blue-200 hover:text-white py-1">
+      More Gallery
+    </Link>
+  </>
+)}
+{menu === "moving" && (
+  <>
+    <Link to="/getinvolved" className="block text-blue-200 hover:text-white py-1">
+      Get Involved
+    </Link>
+    <Link to="/faqs" className="block text-blue-200 hover:text-white py-1">
+      FAQs
+    </Link>
+  </>
+)}
+
                       </div>
                     )}
                   </div>
