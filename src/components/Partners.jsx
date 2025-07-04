@@ -204,7 +204,7 @@ const Partners = () => {
                   backgroundColor: colors.cardBg,
                   borderRadius: "20px",
                   padding: "20px",
-                  minHeight: "160px",
+                  minHeight: "180px",
                   display: "flex",
                   flexDirection: "column",
                   alignItems: "center",
@@ -224,7 +224,8 @@ const Partners = () => {
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.transform = "translateY(0) scale(1)";
-                  e.currentTarget.style.boxShadow = "0 8px 22px rgba(0, 0, 0, 0.08)";
+                  e.currentTarget.style.boxShadow =
+                    "0 8px 22px rgba(0, 0, 0, 0.08)";
                 }}
               >
                 <div
@@ -275,7 +276,14 @@ const Partners = () => {
                     letterSpacing: "0.06em",
                     userSelect: "none",
                     textAlign: "center",
+                    wordWrap: "break-word",
+                    maxWidth: "100%",
+                    overflow: "hidden",
+                    display: "-webkit-box",
+                    WebkitLineClamp: 2,
+                    WebkitBoxOrient: "vertical",
                   }}
+                  title={partner.name}
                 >
                   {partner.name}
                 </h4>

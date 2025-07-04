@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { FaTimes, FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 const API_URL = "https://backendd-fundunity.vercel.app/v1/content/imageslider";
 
@@ -6,6 +7,7 @@ const MoreGallery = () => {
   const [gambar, setGambar] = useState([]);
   const [hoverId, setHoverId] = useState(null);
   const [gambarTerpilih, setGambarTerpilih] = useState(null);
+  const [currentIndex, setCurrentIndex] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -25,64 +27,75 @@ const MoreGallery = () => {
       });
   }, []);
 
+  const bukaModal = (index) => {
+    setGambarTerpilih(gambar[index]);
+    setCurrentIndex(index);
+  };
+
+  const navigasi = (arah) => {
+    let next = currentIndex + arah;
+    if (next < 0) next = gambar.length - 1;
+    if (next >= gambar.length) next = 0;
+    setCurrentIndex(next);
+    setGambarTerpilih(gambar[next]);
+  };
+
   if (loading)
     return (
-      <div className="flex justify-center items-center min-h-screen">
-        <p className="text-lg font-semibold text-gray-700">Memuat gambar...</p>
+      <div className="flex justify-center items-center min-h-screen bg-black">
+        <p className="text-lg font-semibold text-gray-400 animate-pulse">
+          Memuat galeri...
+        </p>
       </div>
     );
 
   if (error)
     return (
-      <div className="flex justify-center items-center min-h-screen">
-        <p className="text-red-600 font-semibold">Terjadi kesalahan: {error}</p>
+      <div className="flex justify-center items-center min-h-screen bg-black">
+        <p className="text-red-500 font-semibold">Terjadi kesalahan: {error}</p>
       </div>
     );
 
   if (!gambar.length)
     return (
-      <div className="flex justify-center items-center min-h-screen">
-        <p className="text-gray-600 font-semibold">Belum ada gambar yang tersedia</p>
+      <div className="flex justify-center items-center min-h-screen bg-black">
+        <p className="text-gray-400 font-semibold">Belum ada gambar tersedia</p>
       </div>
     );
 
   return (
-    <section className="bg-gradient-to-tr from-gray-800 via-gray-900 to-black py-24 px-6 min-h-screen pt-28">
+    <section className="bg-gradient-to-br from-gray-900 via-gray-950 to-black py-24 px-6 min-h-screen pt-28">
       {/* Header */}
-      <div className="max-w-4xl mx-auto text-center mb-14">
-        <h1 className="text-5xl font-extrabold text-gray-200 tracking-wide drop-shadow-lg select-none">
+      <div className="max-w-4xl mx-auto text-center mb-16">
+        <h1 className="text-5xl font-extrabold text-white tracking-wide drop-shadow-lg select-none">
           Jelajahi Galeri Kami
         </h1>
-        <p className="mt-5 text-lg text-gray-300 max-w-2xl mx-auto leading-relaxed">
-          Temukan momen-momen inspiratif dalam galeri kami. Setiap gambar menyimpan kisah tentang harapan, komunitas, dan perubahan.
+        <p className="mt-5 text-lg text-gray-400 max-w-2xl mx-auto leading-relaxed">
+          Temukan momen-momen inspiratif dari komunitas kami. Setiap gambar memiliki cerita yang patut dibagikan.
         </p>
       </div>
 
       {/* Grid Gambar */}
-      <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
-        {gambar.map(({ id, imageUrl, title, description }) => (
+      <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+        {gambar.map(({ id, imageUrl, title, description }, index) => (
           <div
             key={id}
-            className={`relative rounded-xl overflow-hidden shadow-lg bg-gray-800 cursor-pointer transition-transform duration-500 ${
-              hoverId === id ? "scale-105 shadow-2xl" : ""
-            }`}
+            className={`relative rounded-2xl overflow-hidden bg-gray-800 bg-opacity-30 backdrop-blur-lg shadow-lg hover:shadow-xl transition-all duration-500 ease-in-out transform hover:scale-[1.04] group`}
             onMouseEnter={() => setHoverId(id)}
             onMouseLeave={() => setHoverId(null)}
-            onClick={() => setGambarTerpilih({ imageUrl, title })}
+            onClick={() => bukaModal(index)}
           >
             <img
               src={imageUrl}
               alt={title || "Gambar Galeri"}
-              className={`w-full h-72 object-cover transition-transform duration-500 ${
-                hoverId === id ? "scale-110" : "scale-100"
-              }`}
+              className="w-full h-72 object-cover transition-transform duration-500 group-hover:scale-110"
               draggable={false}
               loading="lazy"
             />
-            <div className="p-5 bg-gradient-to-r from-gray-700 via-gray-800 to-gray-900 text-gray-200 font-semibold text-center tracking-wide">
-              <h3 className="text-xl">{title}</h3>
+            <div className="p-5 bg-black bg-opacity-40 backdrop-blur-sm text-white text-center">
+              <h3 className="text-lg font-bold truncate">{title}</h3>
               {description && (
-                <p className="mt-1 text-sm font-normal opacity-80">{description}</p>
+                <p className="mt-1 text-sm text-gray-300 line-clamp-2">{description}</p>
               )}
             </div>
           </div>
@@ -92,22 +105,46 @@ const MoreGallery = () => {
       {/* Modal Zoom */}
       {gambarTerpilih && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50"
+          className="fixed inset-0 bg-black bg-opacity-90 backdrop-blur-md flex items-center justify-center z-50 transition-all duration-300"
           onClick={() => setGambarTerpilih(null)}
         >
-          <div className="relative max-w-4xl w-full mx-4" onClick={(e) => e.stopPropagation()}>
+          <div
+            className="relative max-w-5xl w-full mx-4 bg-gray-900 rounded-xl shadow-2xl p-6"
+            onClick={(e) => e.stopPropagation()}
+          >
             <button
               className="absolute top-4 right-4 text-white text-3xl font-bold hover:text-red-500 transition"
               onClick={() => setGambarTerpilih(null)}
+              title="Tutup"
             >
-              &times;
+              <FaTimes />
             </button>
+
             <img
               src={gambarTerpilih.imageUrl}
               alt={gambarTerpilih.title}
-              className="w-full max-h-[90vh] object-contain rounded-lg shadow-2xl"
+              className="w-full max-h-[80vh] object-contain rounded-lg"
             />
-            <p className="mt-4 text-center text-gray-200 text-lg">{gambarTerpilih.title}</p>
+
+            <p className="mt-4 text-center text-gray-200 text-lg font-semibold">
+              {gambarTerpilih.title}
+            </p>
+
+            {/* Navigasi panah */}
+            <button
+              className="absolute top-1/2 left-4 -translate-y-1/2 bg-gray-800 bg-opacity-70 p-2 rounded-full text-white hover:bg-opacity-100 transition"
+              onClick={() => navigasi(-1)}
+              title="Sebelumnya"
+            >
+              <FaArrowLeft />
+            </button>
+            <button
+              className="absolute top-1/2 right-4 -translate-y-1/2 bg-gray-800 bg-opacity-70 p-2 rounded-full text-white hover:bg-opacity-100 transition"
+              onClick={() => navigasi(1)}
+              title="Selanjutnya"
+            >
+              <FaArrowRight />
+            </button>
           </div>
         </div>
       )}
