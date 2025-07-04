@@ -135,13 +135,6 @@ export default function Header() {
                         >
                           Kontak
                         </Link>
-                        <Link
-                          to="/"
-                          className="block px-4 py-2 text-sm hover:bg-blue-700"
-                          role="menuitem"
-                        >
-                          Beranda
-                        </Link>
                       </>
                     )}
 
@@ -267,9 +260,6 @@ export default function Header() {
                             </Link>
                             <Link to="/contact" className="block text-blue-200 hover:text-white py-1">
                               Kontak
-                            </Link>
-                            <Link to="/" className="block text-blue-200 hover:text-white py-1">
-                              Beranda
                             </Link>
                           </>
                         )}

@@ -24,7 +24,7 @@ function Programs() {
       </h2>
 
       <div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 max-w-6xl">
-        {programData.map((program) => (
+        {programData.slice(0, 6).map((program) => (
           <div
             key={program.id}
             className="bg-white rounded-xl shadow-xl overflow-hidden border border-gray-200 hover:shadow-2xl transition-transform transform hover:-translate-y-2 duration-500 flex flex-col"
@@ -44,7 +44,9 @@ function Programs() {
             </div>
 
             <div className="p-6 flex flex-col flex-grow">
-              <h3 className="text-[#004f9f] font-semibold text-2xl mb-3 tracking-wide">{program.title}</h3>
+              <h3 className="text-[#004f9f] font-semibold text-2xl mb-3 tracking-wide">
+                {program.title}
+              </h3>
               <p className="text-gray-600 flex-grow mb-6 leading-relaxed">
                 {program.description?.length > 100
                   ? `${program.description.slice(0, 100)}...`
