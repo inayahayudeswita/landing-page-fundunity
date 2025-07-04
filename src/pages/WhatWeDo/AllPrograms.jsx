@@ -18,7 +18,7 @@ function AllPrograms() {
   }, []);
 
   return (
-    <section className="min-h-screen py-20 px-6 bg-blue-50">
+    <section className="min-h-screen pt-28 pb-20 px-6 bg-blue-50">
       <div className="max-w-7xl mx-auto">
         <h1 className="text-4xl font-bold text-center text-blue-800 mb-16">Semua Program</h1>
 

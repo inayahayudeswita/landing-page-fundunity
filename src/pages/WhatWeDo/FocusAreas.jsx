@@ -85,7 +85,7 @@ export default function FokusUtama() {
   ];
 
   return (
-    <section className="bg-gradient-to-br from-white to-blue-50 min-h-screen flex flex-col justify-center p-8">
+    <section className="bg-gradient-to-br from-white to-blue-50 min-h-screen flex flex-col justify-center p-8 pt-28">
       <div className="max-w-5xl mx-auto">
         <h1 className="text-4xl font-extrabold text-center text-blue-900 mb-12 drop-shadow-md">
           Fokus Utama Kami
