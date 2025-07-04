@@ -20,7 +20,7 @@ function Programs() {
   return (
     <section className="bg-gradient-to-b from-blue-50 to-white py-20 min-h-screen flex flex-col items-center px-6">
       <h2 className="text-center text-[#004f9f] font-extrabold text-4xl mb-16 max-w-4xl leading-tight drop-shadow-md">
-        Melalui program-program yang bersinergi, <br /> Yuk Mari Project berusaha untuk menciptakan Indonesia yang bebas dari kelaparan.
+        Melalui program-program yang bersinergi, <br /> Komunitas Ruang Berbagi berusaha untuk menciptakan Indonesia yang bebas dari kelaparan.
       </h2>
 
       <div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 max-w-6xl">
@@ -63,7 +63,7 @@ function Programs() {
 
       <div className="mt-14">
         <Link
-          to="/program"
+          to="/allprograms"
           className="inline-block bg-transparent border-2 border-blue-700 text-blue-700 font-semibold py-3 px-10 rounded-full hover:bg-blue-700 hover:text-white transition-colors duration-300 shadow-md"
         >
           Other Programs &gt;

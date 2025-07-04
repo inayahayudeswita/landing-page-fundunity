@@ -31,10 +31,9 @@ const Partners = () => {
         if (!res.ok) throw new Error("Failed to fetch partners");
         const data = await res.json();
 
-        // Map data to expected format if necessary
         const formatted = data.map(item => ({
           name: item.name,
-          logo: item.imageUrl || "", // fallback if no imageUrl
+          logo: item.imageUrl || "",
         }));
 
         setPartners(formatted);
@@ -90,14 +89,13 @@ const Partners = () => {
         }}
       ></div>
 
-      {/* Main Logo */}
+      {/* Logo */}
       <div
         style={{
           marginBottom: "20px",
           display: "flex",
           justifyContent: "center",
           filter: "drop-shadow(0 6px 15px rgba(0,0,0,0.12))",
-          transition: "transform 0.3s ease",
         }}
       >
         <div
@@ -179,14 +177,8 @@ const Partners = () => {
         </p>
       </div>
 
-      {/* Partner Logos Slider */}
-      <div
-        style={{
-          maxWidth: "1000px",
-          margin: "0 auto",
-          padding: "0 20px",
-        }}
-      >
+      {/* Partner Logos */}
+      <div style={{ maxWidth: "1000px", margin: "0 auto", padding: "0 20px" }}>
         <Swiper
           modules={[Autoplay, Navigation]}
           slidesPerView={4}
@@ -198,22 +190,12 @@ const Partners = () => {
           }}
           navigation={true}
           breakpoints={{
-            320: {
-              slidesPerView: 1,
-              spaceBetween: 20,
-            },
-            640: {
-              slidesPerView: 2,
-              spaceBetween: 25,
-            },
-            1024: {
-              slidesPerView: 4,
-              spaceBetween: 32,
-            },
+            320: { slidesPerView: 1, spaceBetween: 16 },
+            480: { slidesPerView: 1.5, spaceBetween: 20 },
+            640: { slidesPerView: 2, spaceBetween: 25 },
+            1024: { slidesPerView: 4, spaceBetween: 32 },
           }}
-          style={{
-            paddingBottom: "48px",
-          }}
+          style={{ paddingBottom: "48px" }}
         >
           {partners.map((partner, i) => (
             <SwiperSlide key={i}>
@@ -221,8 +203,8 @@ const Partners = () => {
                 style={{
                   backgroundColor: colors.cardBg,
                   borderRadius: "20px",
-                  padding: "30px",
-                  height: "180px",
+                  padding: "20px",
+                  minHeight: "160px",
                   display: "flex",
                   flexDirection: "column",
                   alignItems: "center",
@@ -247,10 +229,9 @@ const Partners = () => {
               >
                 <div
                   style={{
-                    position: "relative",
-                    width: "90px",
-                    height: "90px",
-                    marginBottom: "22px",
+                    width: "70px",
+                    height: "70px",
+                    marginBottom: "16px",
                     filter: "drop-shadow(0 4px 6px rgba(0,0,0,0.05))",
                   }}
                 >
@@ -288,12 +269,12 @@ const Partners = () => {
                 <h4
                   style={{
                     margin: "0",
-                    fontSize: "20px",
+                    fontSize: "16px",
                     fontWeight: "700",
                     color: colors.text,
                     letterSpacing: "0.06em",
                     userSelect: "none",
-                    transition: "color 0.3s ease",
+                    textAlign: "center",
                   }}
                 >
                   {partner.name}

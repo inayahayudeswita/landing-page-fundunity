@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 
-const BASE_URL =  "https://backendd-fundunity.vercel.app";
+const BASE_URL = "https://backendd-fundunity.vercel.app";
 
 const ImageSlider = () => {
   const [images, setImages] = useState([]);
@@ -31,7 +31,6 @@ const ImageSlider = () => {
         if (!response.ok) throw new Error("Failed to fetch images");
         const data = await response.json();
 
-        // Map data dengan sesuaikan ke imageUrl
         const formatted = data.map(item => ({
           src: item.imageUrl.startsWith("http") 
             ? item.imageUrl 
@@ -63,21 +62,20 @@ const ImageSlider = () => {
   }, [images]);
 
   return (
-    <div className="relative w-full max-w-6xl mx-auto py-8">
-      <h2 className="text-3xl font-bold text-center mb-6">Image Slider</h2>
+    <div className="relative w-full max-w-6xl mx-auto py-10 px-4">
+      <h2 className="text-3xl font-bold text-center mb-6 text-gray-800">
+        Galeri Slider
+      </h2>
 
-      <div
-        ref={scrollRef}
-        className="flex overflow-x-auto scroll-smooth gap-6 px-4"
-      >
+      <div ref={scrollRef} className="flex overflow-x-auto scroll-smooth gap-6 pb-4">
         {images.length === 0 ? (
-          <p className="text-center w-full">Loading images...</p>
+          <p className="text-center w-full">Memuat gambar...</p>
         ) : (
           images.map((image, index) => (
             <div
               key={index}
-              className={`flex-shrink-0 w-72 relative rounded-xl overflow-hidden cursor-pointer transition-transform duration-500 shadow-lg ${
-                hoveredIndex === index ? "scale-105 shadow-2xl" : "scale-100"
+              className={`flex-shrink-0 w-64 relative rounded-xl overflow-hidden cursor-pointer transition-transform duration-500 shadow-md ${
+                hoveredIndex === index ? "scale-105 shadow-xl" : "scale-100"
               }`}
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
@@ -85,19 +83,24 @@ const ImageSlider = () => {
               <img
                 src={image.src}
                 alt={`Slide ${index + 1}`}
-                className={`w-full h-64 object-cover transition-transform duration-700 ${
+                className={`w-full h-56 object-cover transition-transform duration-700 ${
                   hoveredIndex === index ? "scale-110" : "scale-100"
                 }`}
                 draggable={false}
               />
-              <div className="absolute bottom-0 w-full bg-gradient-to-t from-black via-transparent to-transparent p-4 text-white font-semibold text-center">
-                {image.description}
+
+              {/* Teks Box */}
+              <div className="absolute bottom-3 left-3 right-3 bg-black/50 backdrop-blur-sm text-white rounded-lg px-3 py-1.5 shadow-sm">
+                <p className="text-xs text-center font-medium tracking-tight leading-snug">
+                  {image.description}
+                </p>
               </div>
             </div>
           ))
         )}
       </div>
 
+      {/* Tombol Scroll Kiri */}
       {canScrollLeft && (
         <button
           onClick={scrollLeft}
@@ -115,6 +118,7 @@ const ImageSlider = () => {
         </button>
       )}
 
+      {/* Tombol Scroll Kanan */}
       {canScrollRight && (
         <button
           onClick={scrollRight}

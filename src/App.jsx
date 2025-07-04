@@ -10,15 +10,15 @@ import Footer from './components/Footer';
 import Partners from './components/Partners';
 
 import ProgramDetail from './pages/WhatWeDo/ProgramDetail'; // Detail program
-
-// Import komponen FocusAreas, Faqs, dan GetInvolved yang sudah kamu setuju dan aku buatkan:
 import FocusAreas from './pages/WhatWeDo/FocusAreas';
+import AllPrograms from './pages/WhatWeDo/AllPrograms';
 import MoreGallery from './pages/WhatWeDo/MoreGallery';
 import Faqs from './pages/MovingTogether/Faqs';
 import GetInvolved from './pages/MovingTogether/GetInvolved';
 import Contact from './pages/WhoWeAre/Contact';
+import PartnersPage from './pages/WhoWeAre/PartnersPage'; 
 import About from './pages/WhoWeAre/About';
-import ThankYou from "./pages/ThankYou";
+import ThankYou from './pages/ThankYou';
 import ErrorBoundary from './components/ErrorBoundary';
 
 function App() {
@@ -29,7 +29,7 @@ function App() {
           <Header />
           <main className="p-8">
             <Routes>
-              {/* Homepage */}
+              {/* Beranda / Homepage */}
               <Route
                 path="/"
                 element={
@@ -43,21 +43,30 @@ function App() {
                 }
               />
 
-              {/* Static pages */}
+              {/* Halaman statis */}
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
-              <Route path="/focusareas" element={<FocusAreas />} />  
-              <Route path="/moregallery" element={<MoreGallery />} />  
+              <Route path="/partners" element={<PartnersPage />} />
+              <Route path="/focusareas" element={<FocusAreas />} />
+                            <Route path="/allprograms" element={<AllPrograms />} />
+              <Route path="/moregallery" element={<MoreGallery />} />
               <Route path="/faqs" element={<Faqs />} />
               <Route path="/getinvolved" element={<GetInvolved />} />
               <Route path="/thankyou" element={<ThankYou />} />
 
-              {/* Program routes */}
-              <Route path="/program" element={<Programs />} />               {/* List of programs */}
-              <Route path="/program/:id" element={<ProgramDetail />} />     {/* Detail program */}
+              {/* Routing program */}
+              <Route path="/program" element={<Programs />} /> {/* Daftar program */}
+              <Route path="/program/:id" element={<ProgramDetail />} /> {/* Detail program */}
 
-              {/* 404 Fallback */}
-              <Route path="*" element={<div className="text-center text-red-600 text-xl mt-10">Page Not Found</div>} />
+              {/* Halaman 404 */}
+              <Route
+                path="*"
+                element={
+                  <div className="text-center text-red-600 text-xl mt-10">
+                    Halaman tidak ditemukan
+                  </div>
+                }
+              />
             </Routes>
           </main>
           <Footer />

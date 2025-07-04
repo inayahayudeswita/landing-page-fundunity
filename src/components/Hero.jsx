@@ -42,19 +42,19 @@ export default function Hero() {
       const data = await response.json();
 
       if (!response.ok) {
-        alert("Gagal membuat transaksi: " + (data.error || "Unknown error"));
+        alert("Gagal membuat transaksi: " + (data.error || "Terjadi kesalahan."));
         setLoading(false);
         return;
       }
 
-      // Redirect ke URL yang diberikan backend, fallback ke homepage
+      // Redirect ke URL dari backend, fallback ke halaman utama
       if (data.redirectUrl) {
         window.location.href = data.redirectUrl;
       } else {
         window.location.href = "https://landing-page-fundunity.vercel.app/";
       }
     } catch (error) {
-      alert("Error saat membuat transaksi: " + error.message);
+      alert("Terjadi kesalahan saat membuat transaksi: " + error.message);
     } finally {
       setLoading(false);
       setShowDonateForm(false);
@@ -83,30 +83,30 @@ export default function Hero() {
               className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight text-white drop-shadow-lg mb-4 sm:mb-6"
               style={{ fontFamily: "'Poppins', sans-serif" }}
             >
-              Together, Creating Change with Komunitas Ruang Berbagi
+              Bersama, Ciptakan Perubahan bersama Komunitas Ruang Berbagi
             </h1>
             <p className="text-base sm:text-lg md:text-xl text-blue-100 max-w-2xl drop-shadow mb-6 sm:mb-8 leading-relaxed">
-              Join us in making a meaningful impact for those in need and building a better future.
+              Bergabunglah bersama kami untuk memberi dampak nyata bagi yang membutuhkan dan membangun masa depan yang lebih baik.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
               <button
                 onClick={() => navigate("/About")}
                 className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-blue-600 to-blue-400 text-white font-semibold rounded-lg shadow-lg hover:brightness-110 transition transform hover:scale-105 text-sm sm:text-base"
               >
-                Let's Get Moving
+                Ayo Mulai Bergerak
               </button>
               <button
                 onClick={toggleDonateForm}
                 className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 border border-white text-white rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition transform hover:scale-105 text-sm sm:text-base"
               >
-                Donate Now
+                Donasi Sekarang
               </button>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Donate Modal */}
+      {/* Modal Donasi */}
       {showDonateForm && (
         <div
           className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 p-4"
@@ -117,7 +117,7 @@ export default function Hero() {
             onClick={(e) => e.stopPropagation()}
           >
             <h2 className="text-xl sm:text-2xl font-bold mb-4 text-center text-blue-700">
-              Donate Now
+              Formulir Donasi
             </h2>
             <form onSubmit={handleSubmit}>
               <input
@@ -126,7 +126,7 @@ export default function Hero() {
                 type="text"
                 value={formData.name}
                 onChange={handleChange}
-                placeholder="Full Name"
+                placeholder="Nama Lengkap"
                 className="w-full mb-4 px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg text-sm sm:text-base"
               />
               <input
@@ -136,8 +136,8 @@ export default function Hero() {
                 value={formData.email}
                 onChange={handleChange}
                 pattern="[a-zA-Z0-9._%+-]+@gmail\.com"
-                title="Please enter a valid Gmail address"
-                placeholder="Email Address"
+                title="Harap masukkan alamat Gmail yang valid"
+                placeholder="Alamat Email (hanya Gmail)"
                 className="w-full mb-4 px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg text-sm sm:text-base"
               />
               <input
@@ -146,7 +146,7 @@ export default function Hero() {
                 type="number"
                 value={formData.amount}
                 onChange={handleChange}
-                placeholder="Donation Amount (IDR)"
+                placeholder="Jumlah Donasi (IDR)"
                 min={1}
                 className="w-full mb-4 px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg text-sm sm:text-base"
               />
@@ -155,7 +155,7 @@ export default function Hero() {
                 value={formData.message}
                 onChange={handleChange}
                 rows={4}
-                placeholder="Add a message or description (optional)"
+                placeholder="Tulis pesan atau keterangan (opsional)"
                 className="w-full mb-6 px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg text-sm sm:text-base resize-none"
               />
               <button
@@ -163,7 +163,7 @@ export default function Hero() {
                 disabled={loading}
                 className="w-full py-2 sm:py-3 bg-gradient-to-r from-blue-600 to-blue-400 text-white rounded-lg font-bold hover:brightness-110 transition text-sm sm:text-base"
               >
-                {loading ? "Processing..." : "Complete Donation"}
+                {loading ? "Memproses..." : "Selesaikan Donasi"}
               </button>
             </form>
           </div>

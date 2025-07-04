@@ -52,9 +52,8 @@ export default function Contact() {
   };
 
   return (
-    <div className="max-w-lg mx-auto bg-white p-8 rounded-lg shadow-lg">
-      <h2 className="text-3xl font-semibold mb-6 text-blue-700 text-center">Contact Us</h2>
-
+  <div className="pt-28 max-w-lg mx-auto bg-white p-8 rounded-lg shadow-lg">
+    <h2 className="text-3xl font-semibold mb-6 text-blue-700 text-center">Contact Us</h2>
       <form onSubmit={handleSubmit} className="space-y-5">
         {/* Name */}
         <div className="flex items-center border border-gray-300 rounded-md overflow-hidden focus-within:ring-2 focus-within:ring-blue-500">

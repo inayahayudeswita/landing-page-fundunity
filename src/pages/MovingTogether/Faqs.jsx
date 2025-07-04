@@ -3,24 +3,24 @@ import React, { useState } from "react";
 export default function FAQs() {
   const faqs = [
     {
-      question: "How can I make a donation?",
+      question: "Bagaimana cara saya memberikan donasi?",
       answer:
-        "You can donate through our online donation form accessible on this site.",
+        "Anda dapat memberikan donasi melalui formulir donasi online yang tersedia di situs ini.",
     },
     {
-      question: "Can I volunteer even if I have no experience?",
+      question: "Apakah saya bisa menjadi relawan meskipun tidak punya pengalaman?",
       answer:
-        "Absolutely! We welcome volunteers from all backgrounds and provide guidance.",
+        "Tentu saja! Kami menyambut relawan dari berbagai latar belakang dan akan memberikan panduan yang dibutuhkan.",
     },
     {
-      question: "Are donations tax-deductible?",
+      question: "Apakah donasi saya bisa dikurangkan dari pajak?",
       answer:
-        "Yes, all donations are tax-deductible and we provide receipts upon request.",
+        "Ya, semua donasi dapat dikurangkan dari pajak dan kami menyediakan bukti donasi bila diperlukan.",
     },
     {
-      question: "How can I contact your organization?",
+      question: "Bagaimana cara saya menghubungi organisasi ini?",
       answer:
-        "You can reach us via the Contact page or email us at info@example.org.",
+        "Anda dapat menghubungi kami melalui halaman Kontak atau melalui email di info@example.org.",
     },
   ];
 
@@ -30,11 +30,12 @@ export default function FAQs() {
     setOpenIndex(openIndex === index ? null : index);
   };
 
+  // ✅ Tambahkan return di sini
   return (
-    <section className="bg-gradient-to-tr from-white to-gray-100 min-h-screen p-8">
+    <section className="bg-gradient-to-tr from-white to-gray-100 min-h-screen px-4 sm:px-8 pt-32">
       <div className="max-w-3xl mx-auto">
         <h1 className="text-4xl font-extrabold text-gray-900 mb-12 text-center drop-shadow-sm">
-          Frequently Asked Questions
+          Pertanyaan yang Sering Diajukan
         </h1>
         <div className="space-y-4">
           {faqs.map(({ question, answer }, idx) => (
@@ -47,7 +48,9 @@ export default function FAQs() {
                 className="w-full px-6 py-4 text-left flex justify-between items-center focus:outline-none"
                 aria-expanded={openIndex === idx}
               >
-                <span className="text-lg font-semibold text-gray-800">{question}</span>
+                <span className="text-lg font-semibold text-gray-800">
+                  {question}
+                </span>
                 <svg
                   className={`w-6 h-6 text-gray-600 transform transition-transform duration-300 ${
                     openIndex === idx ? "rotate-180" : ""

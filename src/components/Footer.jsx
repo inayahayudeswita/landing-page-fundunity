@@ -5,7 +5,7 @@ import {
   faPaperPlane, faUsers, faHandshake, faBullseye
 } from '@fortawesome/free-solid-svg-icons';
 import {
-  faInstagram, faLinkedinIn
+  faInstagram, faWhatsapp
 } from '@fortawesome/free-brands-svg-icons';
 import emailjs from '@emailjs/browser';
 
@@ -24,9 +24,7 @@ const Footer = () => {
 
     if (!email) return;
 
-    const templateParams = {
-      email,
-    };
+    const templateParams = { email };
 
     emailjs.send(
       "service_g0lt91j",
@@ -36,7 +34,7 @@ const Footer = () => {
     )
     .then(() => {
       setIsSubscribed(true);
-      setFeedback("Thanks for subscribing!");
+      setFeedback("Terima kasih sudah berlangganan!");
       setEmail('');
       setTimeout(() => {
         setIsSubscribed(false);
@@ -44,56 +42,47 @@ const Footer = () => {
       }, 4000);
     })
     .catch(() => {
-      setFeedback("Failed to subscribe. Try again.");
+      setFeedback("Gagal berlangganan. Silakan coba lagi.");
     });
-  };
-
-  const colors = {
-    primary: "#1a73e8",
-    accent: "#34a853",
-    grayBg: "#1e293b",
-    cardBg: "#334155",
-    textLight: "#ffffff",
-    gradientPrimary: "linear-gradient(135deg, #1a73e8 0%, #4285f4 100%)",
   };
 
   const footerSections = [
     {
-      title: "Who We Are",
+      title: "Siapa Kami",
       icon: faUsers,
       links: [
-        { name: "About KRB", url: "/about" },
-        { name: "Partners", url: "/partners" },
-        { name: "Contact Us", url: "/contact" }
+        { name: "Tentang KRB", url: "/about" },
+        { name: "Mitra", url: "/partners" },
+        { name: "Hubungi Kami", url: "/contact" }
       ]
     },
     {
-      title: "Moving Together",
+      title: "Bergerak Bersama",
       icon: faHandshake,
       links: [
-        { name: "FAQs", url: "/faqs" },
-        { name: "Get Involved", url: "/getinvolved" },
+        { name: "FAQ", url: "/faqs" },
+        { name: "Gabung Bersama Kami", url: "/getinvolved" },
       ]
     },
     {
-      title: "What We Do",
+      title: "Apa yang Kami Lakukan",
       icon: faBullseye,
       links: [
-        { name: "Programs", url: "/program" },
-        { name: "Focus Areas", url: "/focusareas" },
+        { name: "Program", url: "/allprograms" },
+        { name: "Fokus Utama", url: "/focusareas" },
       ]
     }
   ];
 
   const contactInfo = [
-    { icon: faPhone, text: "0852 - 1310 - 3997" },
-    { icon: faEnvelope, text: "KomunitasRuangBeragi@gmail.com" },
+    { icon: faPhone, text: "0821 - 1677 - 1146" },
+    { icon: faEnvelope, text: "komunitasruangberbagi@gmail.com" },
     { icon: faMapMarkerAlt, text: "Bandung, Jawa Barat, Indonesia" }
   ];
 
   const socialLinks = [
     { name: "Instagram", icon: faInstagram, url: "https://instagram.com/komunitasruangberbagi", color: "#e4405f" },
-    { name: "LinkedIn", icon: faLinkedinIn, url: "https://instagram.com/komunitasruangberbagi", color: "#0077b5" }
+    { name: "WhatsApp Channel", icon: faWhatsapp, url: "https://whatsapp.com/channel/0029VazY3qSFXUuUlnV5VQ0q", color: "#25D366" }
   ];
 
   return (
@@ -104,18 +93,18 @@ const Footer = () => {
           <div className={`max-w-4xl mx-auto text-center transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             <div className="inline-flex items-center gap-3 mb-6 px-6 py-3 rounded-full bg-white/10 backdrop-blur-sm">
               <FontAwesomeIcon icon={faPaperPlane} className="text-white text-2xl" />
-              <span className="text-sm font-semibold text-white tracking-wider uppercase">Stay Connected</span>
+              <span className="text-sm font-semibold text-white tracking-wider uppercase">Tetap Terhubung</span>
             </div>
-            <h2 className="text-4xl font-black mb-4">Join Our Community</h2>
+            <h2 className="text-4xl font-black mb-4">Bergabunglah Bersama Kami</h2>
             <p className="text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
-              Get the latest updates on our programs, impact stories, and opportunities to make a difference.
+              Dapatkan pembaruan terbaru seputar program, kisah inspiratif, dan kesempatan berkontribusi.
             </p>
             <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row items-center gap-4 max-w-xl mx-auto">
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your email"
+                placeholder="Masukkan email Anda"
                 className="w-full px-6 py-4 rounded-2xl bg-white/10 text-white placeholder-gray-400 border border-white/20 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required
               />
@@ -123,7 +112,7 @@ const Footer = () => {
                 type="submit"
                 className="px-6 py-4 rounded-2xl font-bold text-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 bg-gradient-to-r from-blue-600 to-blue-400"
               >
-                {isSubscribed ? "✓ Subscribed!" : "Subscribe"}
+                {isSubscribed ? "✓ Terdaftar!" : "Berlangganan"}
               </button>
             </form>
             {feedback && <p className="mt-4 text-sm text-green-400">{feedback}</p>}
@@ -136,7 +125,7 @@ const Footer = () => {
         <div className="lg:col-span-2 space-y-6">
           <h3 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-green-400 bg-clip-text text-transparent">Komunitas Ruang Berbagi</h3>
           <p className="text-gray-400">
-            Helping individuals and organizations fund and support impactful causes for a better world.
+            Membantu individu dan organisasi mendukung berbagai aksi nyata demi dunia yang lebih baik.
           </p>
           {contactInfo.map((item, idx) => (
             <div key={idx} className="flex items-center gap-3 text-gray-300 hover:text-white transition">
@@ -165,19 +154,19 @@ const Footer = () => {
 
       {/* Social Footer */}
       <div className="border-t border-gray-700 pt-10 text-center">
-        <h4 className="text-xl font-semibold mb-6">Follow Us</h4>
+        <h4 className="text-xl font-semibold mb-6">Ikuti Kami</h4>
         <div className="flex justify-center gap-5 mb-8">
           {socialLinks.map((social, idx) => (
-            <a key={idx} href={social.url} className="text-white w-10 h-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition">
+            <a key={idx} href={social.url} target="_blank" rel="noopener noreferrer" className="text-white w-10 h-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition">
               <FontAwesomeIcon icon={social.icon} />
             </a>
           ))}
         </div>
-        <p className="text-sm text-gray-500 mb-2">© {new Date().getFullYear()} Komunitas Ruang Berbagi. All rights reserved.</p>
+        <p className="text-sm text-gray-500 mb-2">© {new Date().getFullYear()} Komunitas Ruang Berbagi. Semua hak dilindungi.</p>
         <div className="flex justify-center gap-4 text-sm text-gray-500">
-          <a href="#">Privacy Policy</a>
+          <a href="#">Kebijakan Privasi</a>
           <span>|</span>
-          <a href="#">Terms of Service</a>
+          <a href="#">Syarat & Ketentuan</a>
         </div>
       </div>
     </footer>

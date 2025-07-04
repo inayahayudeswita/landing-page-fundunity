@@ -1,11 +1,11 @@
 import React from "react";
 
-export default function FocusAreas() {
-  const areas = [
+export default function FokusUtama() {
+  const bidang = [
     {
-      title: "Education",
+      title: "Pendidikan",
       description:
-        "Providing quality education for underprivileged children to unlock their potential.",
+        "Memberikan pendidikan berkualitas untuk anak-anak kurang mampu agar mereka dapat mengembangkan potensinya.",
       icon: (
         <svg
           className="w-12 h-12 text-blue-600"
@@ -24,9 +24,9 @@ export default function FocusAreas() {
       ),
     },
     {
-      title: "Health",
+      title: "Kesehatan",
       description:
-        "Running health awareness campaigns and access to basic healthcare services.",
+        "Menyelenggarakan kampanye kesadaran kesehatan dan memberikan akses layanan kesehatan dasar.",
       icon: (
         <svg
           className="w-12 h-12 text-green-600"
@@ -44,9 +44,9 @@ export default function FocusAreas() {
       ),
     },
     {
-      title: "Environment",
+      title: "Lingkungan",
       description:
-        "Promoting initiatives for environmental protection and sustainability.",
+        "Mendorong inisiatif untuk perlindungan lingkungan dan keberlanjutan.",
       icon: (
         <svg
           className="w-12 h-12 text-teal-600"
@@ -63,9 +63,9 @@ export default function FocusAreas() {
       ),
     },
     {
-      title: "Community",
+      title: "Komunitas",
       description:
-        "Empowering communities through skill development and collaboration.",
+        "Memberdayakan masyarakat melalui pengembangan keterampilan dan kolaborasi.",
       icon: (
         <svg
           className="w-12 h-12 text-purple-600"
@@ -88,10 +88,10 @@ export default function FocusAreas() {
     <section className="bg-gradient-to-br from-white to-blue-50 min-h-screen flex flex-col justify-center p-8">
       <div className="max-w-5xl mx-auto">
         <h1 className="text-4xl font-extrabold text-center text-blue-900 mb-12 drop-shadow-md">
-          Our Focus Areas
+          Fokus Utama Kami
         </h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
-          {areas.map(({ title, description, icon }, idx) => (
+          {bidang.map(({ title, description, icon }, idx) => (
             <div
               key={idx}
               className="bg-white rounded-xl shadow-lg p-8 flex flex-col items-center text-center transition-transform hover:scale-105 hover:shadow-2xl duration-300 cursor-default"

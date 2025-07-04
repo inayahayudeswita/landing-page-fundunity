@@ -3,8 +3,8 @@ import React from "react";
 export default function GetInvolved() {
   const actions = [
     {
-      title: "Volunteer",
-      desc: "Lend your time and skills to make a meaningful difference in our programs.",
+      title: "Menjadi Relawan",
+      desc: "Sumbangkan waktu dan keterampilan Anda untuk membuat perbedaan nyata dalam program kami.",
       bgColor: "bg-blue-600",
       icon: (
         <svg
@@ -24,8 +24,8 @@ export default function GetInvolved() {
       ),
     },
     {
-      title: "Donate",
-      desc: "Support us financially so we can keep running impactful programs.",
+      title: "Donasi",
+      desc: "Dukung kami secara finansial agar kami dapat terus menjalankan program-program yang berdampak.",
       bgColor: "bg-green-600",
       icon: (
         <svg
@@ -44,8 +44,8 @@ export default function GetInvolved() {
       ),
     },
     {
-      title: "Spread the Word",
-      desc: "Share our mission with your friends and family to raise awareness.",
+      title: "Sebarkan Pesan",
+      desc: "Bagikan misi kami kepada teman dan keluarga Anda untuk meningkatkan kesadaran.",
       bgColor: "bg-purple-600",
       icon: (
         <svg
@@ -67,7 +67,7 @@ export default function GetInvolved() {
     <section className="bg-gradient-to-r from-purple-50 to-blue-50 min-h-screen flex flex-col justify-center p-8">
       <div className="max-w-4xl mx-auto text-center">
         <h1 className="text-4xl font-extrabold text-purple-900 mb-10 drop-shadow-sm">
-          How to Get Involved
+          Cara Terlibat
         </h1>
         <div className="flex flex-col sm:flex-row justify-center gap-8">
           {actions.map(({ title, desc, bgColor, icon }, idx) => (
