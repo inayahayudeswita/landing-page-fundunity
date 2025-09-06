@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 
-const BASE_URL = "https://backendd-fundunity.vercel.app";
+const BASE_URL = "https://backendd-fundunity.onrender.com";
 
 const ImageSlider = () => {
   const [images, setImages] = useState([]);

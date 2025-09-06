@@ -7,7 +7,7 @@ function AllPrograms() {
   useEffect(() => {
     const fetchAllPrograms = async () => {
       try {
-        const res = await fetch("https://backendd-fundunity.vercel.app/v1/content/program");
+        const res = await fetch("https://backendd-fundunity.onrender.com/v1/content/program");
         const data = await res.json();
         setPrograms(data);
       } catch (error) {

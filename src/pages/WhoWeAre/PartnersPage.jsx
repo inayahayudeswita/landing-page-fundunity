@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-const API_URL = "https://backendd-fundunity.vercel.app/v1/content/ourpartner";
+const API_URL = "https://backendd-fundunity.onrender.com/v1/content/ourpartner";
 
 const PartnersPage = () => {
   const [partners, setPartners] = useState([]);

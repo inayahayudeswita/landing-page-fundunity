@@ -37,7 +37,7 @@ const Gallery = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("https://backendd-fundunity.vercel.app/v1/content/imageslider")
+    fetch("https://backendd-fundunity.onrender.com/v1/content/imageslider")
       .then((res) => {
         if (!res.ok) throw new Error("Gagal mengambil gambar");
         return res.json();

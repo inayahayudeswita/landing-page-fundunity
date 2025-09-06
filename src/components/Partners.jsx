@@ -18,7 +18,7 @@ const colors = {
   lightText: "#5f6368",
 };
 
-const API_BASE_URL = "https://backendd-fundunity.vercel.app/v1/content/ourpartner";
+const API_BASE_URL = "https://backendd-fundunity.onrender.com/v1/content/ourpartner";
 
 const Partners = () => {
   const [partners, setPartners] = useState([]);

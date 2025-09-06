@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FaTimes, FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
-const API_URL = "https://backendd-fundunity.vercel.app/v1/content/imageslider";
+const API_URL = "https://backendd-fundunity.onrender.com/v1/content/imageslider";
 
 const MoreGallery = () => {
   const [gambar, setGambar] = useState([]);
